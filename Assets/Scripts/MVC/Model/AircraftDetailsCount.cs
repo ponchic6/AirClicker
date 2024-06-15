@@ -4,14 +4,16 @@ namespace MVC.Model
 {
     public class AircraftDetailsCount : IAircraftDetailsCount
     {
-        public ReactiveProperty<int> ChassisCount { get; set; } = new();
-        public ReactiveProperty<int> EngineCount { get; set; } = new();
-        public ReactiveProperty<int> AircraftBodyCount { get; set; } = new();
-        public ReactiveProperty<int> RocketCount { get; set; } = new();
+        public ReactiveProperty<float> AircraftCount { set; get; } = new();
+        public ReactiveProperty<float> ChassisCount { get; set; } = new();
+        public ReactiveProperty<float> EngineCount { get; set; } = new();
+        public ReactiveProperty<float> AircraftBodyCount { get; set; } = new();
+        public ReactiveProperty<float> RocketCount { get; set; } = new();
 
-        public IReadOnlyReactiveProperty<int> ChassisCountReadOnly => ChassisCount;
-        public IReadOnlyReactiveProperty<int> EngineCountReadOnly => EngineCount;
-        public IReadOnlyReactiveProperty<int> AircraftBodyCountReadOnly => AircraftBodyCount;
-        public IReadOnlyReactiveProperty<int> RocketCountReadOnly => RocketCount;
+        public IReadOnlyReactiveProperty<float> ChassisCountReadOnly => ChassisCount;
+        public IReadOnlyReactiveProperty<float> EngineCountReadOnly => EngineCount;
+        public IReadOnlyReactiveProperty<float> AircraftBodyCountReadOnly => AircraftBodyCount;
+        public IReadOnlyReactiveProperty<float> AircraftCountReadOnly => AircraftCount;
+        public IReadOnlyReactiveProperty<float> RocketCountReadOnly => RocketCount;
     }
 }

@@ -3,10 +3,11 @@
 namespace MVC.Model
 {
     public interface IAircraftDetailsCountReadOnly
-    {
-        public IReadOnlyReactiveProperty<int> RocketCountReadOnly { get; }
-        public IReadOnlyReactiveProperty<int> ChassisCountReadOnly { get; }
-        public IReadOnlyReactiveProperty<int> EngineCountReadOnly { get; }
-        public IReadOnlyReactiveProperty<int> AircraftBodyCountReadOnly { get; }
+    {   
+        public IReadOnlyReactiveProperty<float> AircraftCountReadOnly { get; }
+        public IReadOnlyReactiveProperty<float> RocketCountReadOnly { get; }
+        public IReadOnlyReactiveProperty<float> ChassisCountReadOnly { get; }
+        public IReadOnlyReactiveProperty<float> EngineCountReadOnly { get; }
+        public IReadOnlyReactiveProperty<float> AircraftBodyCountReadOnly { get; }
     }
 }
