@@ -74,3 +74,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25829bb4112c5e3408e7bff36991c67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aircraftModelsList: {fileID: 11400000, guid: 3e196a45054f20e4faae131569135969, type: 2}

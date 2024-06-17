@@ -1,50 +1,52 @@
 using Factories;
 using MVC.Controller;
 using MVC.Model;
+using StaticData;
+using UnityEngine;
 using Zenject;
 
 namespace Infrastructure
 {
     public class MainInstaller : MonoInstaller
     {
+        [SerializeField] private AircraftModelsList aircraftModelsList;
+        
         public override void InstallBindings()
         {
-            RegisterAircraftDetailsCount();
-            RegisterClickController();
-            RegisterAutoIncreaseModel();
-            RegisterAutoIncreaseController();
+            RegisterAircraftStaticData();
+            RegisterAircraftDetailsStorage();
+            RegisterAircraftStorage();
+            RegisterDetailsIncreaser();
             RegisterCanvasFactory();
         }
 
-        private void RegisterAutoIncreaseController()
+        private void RegisterAircraftStaticData()
         {
-            IAutoIncreaseController autoIncreaseController = Container.Instantiate<AutoIncreaseController>();
-            Container.Bind<IAutoIncreaseController>().FromInstance(autoIncreaseController).AsSingle();
+            Container.Bind<AircraftModelsList>().FromInstance(aircraftModelsList).AsSingle();
         }
 
-        private void RegisterAutoIncreaseModel()
+        private void RegisterAircraftDetailsStorage()
         {
-            IAutoIncreaseModel autoIncreaseModel = Container.Instantiate<AutoIncreaseModel>();
-            Container.Bind<IAutoIncreaseModel>().FromInstance(autoIncreaseModel).AsSingle();
+            IAircraftDetailsStorage aircraftDetailsStorage = Container.Instantiate<AircraftDetailsStorage>();
+            Container.Bind<IAircraftDetailsStorage>().FromInstance(aircraftDetailsStorage).AsSingle();
         }
 
-        private void RegisterAircraftDetailsCount()
+        private void RegisterDetailsIncreaser()
         {
-            AircraftDetailsCount aircraftDetailsCount = Container.Instantiate<AircraftDetailsCount>();
-            Container.Bind<IAircraftDetailsCount>().FromInstance(aircraftDetailsCount).AsSingle();
-            Container.Bind<IAircraftDetailsCountReadOnly>().FromInstance(aircraftDetailsCount).AsSingle();
+            IDetailsIncreaser detailsIncreaser = Container.Instantiate<DetailsIncreaser>();
+            Container.Bind<IDetailsIncreaser>().FromInstance(detailsIncreaser).AsSingle();
         }
 
-        private void RegisterClickController()
+        private void RegisterAircraftStorage()
         {
-            CountFromClickController countFromClickController = Container.Instantiate<CountFromClickController>();
-            Container.Bind<ICountFromClickController>().FromInstance(countFromClickController).AsSingle();
+            IAircraftStorage aircraftStorage = Container.Instantiate<AircraftStorage>();
+            Container.Bind<IAircraftStorage>().FromInstance(aircraftStorage).AsSingle();
         }
-
+        
         private void RegisterCanvasFactory()
         {
-            ICanvasFactory canvasFactory = Container.Instantiate<CanvasFactory>();
-            Container.Bind<ICanvasFactory>().FromInstance(canvasFactory).AsSingle();
+            IUIFactory iuiFactory = Container.Instantiate<UIFactory>();
+            Container.Bind<IUIFactory>().FromInstance(iuiFactory).AsSingle();
         }
     }
 }
