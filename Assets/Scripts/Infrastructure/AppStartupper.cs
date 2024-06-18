@@ -42,7 +42,8 @@ namespace Infrastructure
                 {
                     if (!HasDictionaryDetailWithId(aircraftSerializableItem))
                     {
-                        DetailModel detailModel = new DetailModel(aircraftSerializableItem.DetailModel.ID);
+                        DetailModel detailModel = new DetailModel(aircraftSerializableItem.DetailModel.ID,
+                            aircraftSerializableItem.DetailModel.Sprite);
                         _aircraftDetailsStorage.DetailsCountDictionary[detailModel]
                             = new ReactiveProperty<float>();
 

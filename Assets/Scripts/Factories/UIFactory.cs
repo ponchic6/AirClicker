@@ -17,6 +17,7 @@ namespace Factories
         private const string MainClickerCanvasPath = "UI/ClickerCanvas";
         private const string SelectionAircraftTogglePath = "UI/SelectionAircraftToggle";
         private const string DetailButtonPath = "UI/DetailButton";
+        private const string DetailUpgradeButtonPath = "UI/ImproveDetailButton";
 
         private readonly IDetailsIncreaser _detailsIncreaser;
         private readonly IAircraftDetailsStorage _aircraftDetailsStorage;
@@ -63,6 +64,15 @@ namespace Factories
             }
             
             _mainCanvas.GetComponentInChildren<CreationAircraftButtonView>().SetAircraftModel(aircraftModel);
+        }
+
+        public void CreateUpgradeDetailButton(Transform parent, DetailModel detailModel, ReactiveProperty<float> perSecond)
+        {
+            GameObject upgradeButton = _diContainer.InstantiatePrefabResource(DetailUpgradeButtonPath, parent);
+            DetailUpgradeButtonView upgradeButtonView = upgradeButton.GetComponent<DetailUpgradeButtonView>();
+            upgradeButtonView.Initialize(detailModel.Sprite,
+                _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel],
+                _aircraftDetailsStorage.DetailsCountDictionary[detailModel]);
         }
 
         private void SubscribeOnDetailPerSecond(KeyValuePair<DetailModel, int> keyValue)
