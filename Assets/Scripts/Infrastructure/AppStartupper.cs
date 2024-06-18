@@ -17,11 +17,14 @@ namespace Infrastructure
         private IAircraftStorage _aircraftStorage;
         private IAircraftDetailsStorage _aircraftDetailsStorage;
         private AircraftModelsList _aircraftModelsList;
+        private IDetailPerSecondModel _detailPerSecondModel;
 
         [Inject]
         public void Constructor(IUIFactory iuiFactory, IAircraftStorage aircraftStorage,
-            IAircraftDetailsStorage aircraftDetailsStorage, AircraftModelsList aircraftModelsList)
+            IAircraftDetailsStorage aircraftDetailsStorage, AircraftModelsList aircraftModelsList,
+            IDetailPerSecondModel detailPerSecondModel)
         {
+            _detailPerSecondModel = detailPerSecondModel;
             _aircraftModelsList = aircraftModelsList;
             _aircraftDetailsStorage = aircraftDetailsStorage;
             _aircraftStorage = aircraftStorage;
@@ -39,8 +42,12 @@ namespace Infrastructure
                 {
                     if (!HasDictionaryDetailWithId(aircraftSerializableItem))
                     {
-                        _aircraftDetailsStorage.DetailsCountDictionary[new DetailModel(aircraftSerializableItem.DetailModel.ID)]
+                        DetailModel detailModel = new DetailModel(aircraftSerializableItem.DetailModel.ID);
+                        _aircraftDetailsStorage.DetailsCountDictionary[detailModel]
                             = new ReactiveProperty<float>();
+
+                        _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel] = new ReactiveProperty<float>();
+                        _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value = 1.5f;
                     }
                 }
 

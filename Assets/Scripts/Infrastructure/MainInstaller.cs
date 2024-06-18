@@ -13,11 +13,18 @@ namespace Infrastructure
         
         public override void InstallBindings()
         {
+            RegisterDetailPerSecond();
             RegisterAircraftStaticData();
             RegisterAircraftDetailsStorage();
             RegisterAircraftStorage();
             RegisterDetailsIncreaser();
             RegisterCanvasFactory();
+        }
+
+        private void RegisterDetailPerSecond()
+        {
+            IDetailPerSecondModel detailPerSecondModel = Container.Instantiate<DetailPerSecondModel>();
+            Container.Bind<IDetailPerSecondModel>().FromInstance(detailPerSecondModel).AsSingle();
         }
 
         private void RegisterAircraftStaticData()

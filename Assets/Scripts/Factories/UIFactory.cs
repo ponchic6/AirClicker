@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MVC.Controller;
 using MVC.Model;
 using MVC.View;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace Factories
 {
@@ -19,11 +22,14 @@ namespace Factories
         private readonly IAircraftDetailsStorage _aircraftDetailsStorage;
         private readonly DiContainer _diContainer;
         private GameObject _mainCanvas;
+        private List<IDisposable> _disposables = new List<IDisposable>();
+        private IDetailPerSecondModel _detailPerSecondModel;
 
         public UIFactory(DiContainer diContainer, IDetailsIncreaser detailsIncreaser,
-            IAircraftDetailsStorage aircraftDetailsStorage)
+            IAircraftDetailsStorage aircraftDetailsStorage, IDetailPerSecondModel detailPerSecondModel)
         {
             _aircraftDetailsStorage = aircraftDetailsStorage;
+            _detailPerSecondModel = detailPerSecondModel;
             _detailsIncreaser = detailsIncreaser;
             _diContainer = diContainer;
         }
@@ -44,19 +50,48 @@ namespace Factories
         public void CreateAircraftClickPanel(AircraftModel aircraftModel)
         {
             GameObject detailsScrollRect = _mainCanvas.GetComponentInChildren<ScrollRect>().gameObject;
-
+            
+            Dispose();
+            _disposables.Clear();
+            
             DeleteOldClickerPanel(detailsScrollRect);
             
             foreach (KeyValuePair<DetailModel, int> keyValue in aircraftModel.CreationRecipeDictionary)
             {
-                GameObject detailButton = 
-                    _diContainer.InstantiatePrefabResource(DetailButtonPath, detailsScrollRect.transform);
-
-                detailButton.GetComponent<DetailButtonView>().DetailName.text = keyValue.Key.Id.ToString();
-                detailButton.GetComponent<DetailButtonView>().Initialize(_aircraftDetailsStorage, _detailsIncreaser, keyValue.Key);
+                CreateDetailButtonView(detailsScrollRect, keyValue);
+                SubscribeOnDetailPerSecond(keyValue);
             }
-
+            
             _mainCanvas.GetComponentInChildren<CreationAircraftButtonView>().SetAircraftModel(aircraftModel);
+        }
+
+        private void SubscribeOnDetailPerSecond(KeyValuePair<DetailModel, int> keyValue)
+        {
+            Observable
+                .EveryUpdate()
+                .Subscribe(_ =>
+                {
+                    _aircraftDetailsStorage.DetailsCountDictionary[keyValue.Key].Value +=
+                        _detailPerSecondModel.DetailsPerSecondsDictionary[keyValue.Key].Value * Time.deltaTime;
+                })
+                .AddTo(_disposables);
+        }
+
+        private void CreateDetailButtonView(GameObject detailsScrollRect, KeyValuePair<DetailModel, int> keyValue)
+        {
+            GameObject detailButton = 
+                _diContainer.InstantiatePrefabResource(DetailButtonPath, detailsScrollRect.transform);
+
+            detailButton.GetComponent<DetailButtonView>().DetailName.text = keyValue.Key.Id;
+            detailButton.GetComponent<DetailButtonView>().Initialize(_aircraftDetailsStorage, _detailsIncreaser, keyValue.Key);
+        }
+
+        private void Dispose()
+        {
+            foreach (IDisposable disposable in _disposables)
+            {
+                disposable.Dispose();
+            }
         }
 
         private void DeleteOldClickerPanel(GameObject detailsScrollRect)
