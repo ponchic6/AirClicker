@@ -13,16 +13,35 @@ namespace Infrastructure
         
         public override void InstallBindings()
         {
-            IMoneyStorage moneyStorage = Container.Instantiate<MoneyStorage>();
-            Container.Bind<IMoneyStorage>().FromInstance(moneyStorage).AsSingle();
+            RegisterAircraftsPriceList();
+            RegisterMoneyStorage();
             RegisterUpgradePriceModel();
             RegisterDetailPerSecond();
             RegisterUpgradeStore();
             RegisterAircraftStaticData();
             RegisterAircraftDetailsStorage();
             RegisterAircraftStorage();
+            RegisterAircraftStoreController();
             RegisterDetailsIncreaser();
             RegisterCanvasFactory();
+        }
+
+        private void RegisterAircraftStoreController()
+        {
+            IAircraftStoreController aircraftStoreController = Container.Instantiate<AircraftStoreController>();
+            Container.Bind<IAircraftStoreController>().FromInstance(aircraftStoreController).AsSingle();
+        }
+
+        private void RegisterAircraftsPriceList()
+        {
+            IAircraftsPriceListModel aircraftsPriceListModel = Container.Instantiate<AircraftsPriceListModel>();
+            Container.Bind<IAircraftsPriceListModel>().FromInstance(aircraftsPriceListModel).AsSingle();
+        }
+
+        private void RegisterMoneyStorage()
+        {
+            IMoneyStorage moneyStorage = Container.Instantiate<MoneyStorage>();
+            Container.Bind<IMoneyStorage>().FromInstance(moneyStorage).AsSingle();
         }
 
         private void RegisterUpgradeStore()

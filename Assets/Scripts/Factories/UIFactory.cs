@@ -64,6 +64,7 @@ namespace Factories
             }
             
             _mainCanvas.GetComponentInChildren<CreationAircraftButtonView>().SetAircraftModel(aircraftModel);
+            _mainCanvas.GetComponentInChildren<SellAircraftButtonView>().BindSellAircraftButton(aircraftModel);
         }
 
         public void CreateUpgradeDetailButton(Transform parent, DetailModel detailModel, ReactiveProperty<float> perSecond)

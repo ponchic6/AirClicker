@@ -16,15 +16,18 @@ namespace Infrastructure
         private IUIFactory _uiFactory;
         private IAircraftStorage _aircraftStorage;
         private IAircraftDetailsStorage _aircraftDetailsStorage;
-        private AircraftModelsList _aircraftModelsList;
         private IDetailPerSecondModel _detailPerSecondModel;
         private IUpgradePriceModel _upgradePriceModel;
+        private IAircraftsPriceListModel _aircraftsPriceListModel;
+        private AircraftModelsList _aircraftModelsList;
 
         [Inject]
         public void Constructor(IUIFactory iuiFactory, IAircraftStorage aircraftStorage,
             IAircraftDetailsStorage aircraftDetailsStorage, AircraftModelsList aircraftModelsList,
-            IDetailPerSecondModel detailPerSecondModel, IUpgradePriceModel upgradePriceModel)
+            IDetailPerSecondModel detailPerSecondModel, IUpgradePriceModel upgradePriceModel,
+            IAircraftsPriceListModel aircraftsPriceListModel)
         {
+            _aircraftsPriceListModel = aircraftsPriceListModel;
             _upgradePriceModel = upgradePriceModel;
             _detailPerSecondModel = detailPerSecondModel;
             _aircraftModelsList = aircraftModelsList;
@@ -44,15 +47,7 @@ namespace Infrastructure
                 {
                     if (!HasDictionaryDetailWithId(aircraftSerializableItem))
                     {
-                        DetailModel detailModel = new DetailModel(aircraftSerializableItem.DetailModel.ID,
-                            aircraftSerializableItem.DetailModel.Sprite);
-                        
-                        _aircraftDetailsStorage.DetailsCountDictionary[detailModel]
-                            = new ReactiveProperty<float>();
-                        _upgradePriceModel.PricesUpgradeModelDictionary[detailModel] = new ReactiveProperty<float>();
-                        _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value = 9090;
-                        _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel] = new ReactiveProperty<float>();
-                        _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value = 1.5f;
+                        InitializeDetailModel(aircraftSerializableItem);
                     }
                 }
 
@@ -67,9 +62,26 @@ namespace Infrastructure
 
                 AircraftModel aircraftModel = new AircraftModel(dictionaryReciep, aircraftModelSo.Id, aircraftModelSo.Sprite);
                 _aircraftStorage.AircraftCountDictionary[aircraftModel] = new ReactiveProperty<float>();
+                _aircraftsPriceListModel.AircraftPriceDict[aircraftModel] = new ReactiveProperty<float>();
+                _aircraftsPriceListModel.AircraftPriceDict[aircraftModel].Value = 5f;
+
             } 
             
             _uiFactory.CreateMainClickerCanvas();
+        }
+
+        private void InitializeDetailModel(AircraftSerializableItem aircraftSerializableItem)
+        {
+            DetailModel detailModel = new DetailModel(aircraftSerializableItem.DetailModel.ID,
+                aircraftSerializableItem.DetailModel.Sprite);
+                        
+            _aircraftDetailsStorage.DetailsCountDictionary[detailModel] = new ReactiveProperty<float>();
+                        
+            _upgradePriceModel.PricesUpgradeModelDictionary[detailModel] = new ReactiveProperty<float>();
+            _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value = 9090;
+                        
+            _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel] = new ReactiveProperty<float>();
+            _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value = 1.5f;
         }
 
         private bool HasDictionaryDetailWithId(AircraftSerializableItem aircraftSerializableItem)
