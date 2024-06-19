@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using MVC.Controller;
+using MVC.Model;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -16,16 +18,22 @@ namespace MVC.View
         [SerializeField] private Image icon;
 
         private List<IDisposable> _disposables = new List<IDisposable>();
+        private IDetailUpgradeStore _detailUpgradeStore;
+        private IUpgradePriceModel _upgradePriceModel;
+        private DetailModel _detailModel;
 
         [Inject]
-        public void Constructor()
+        public void Constructor(IDetailUpgradeStore detailUpgradeStore,
+            IUpgradePriceModel upgradePriceModel)
         {
-            
+            _upgradePriceModel = upgradePriceModel;
+            _detailUpgradeStore = detailUpgradeStore;
         }
 
-        public void Initialize(Sprite detailModelSprite, ReactiveProperty<float> perSecond,
+        public void Initialize(DetailModel detailModel, Sprite detailModelSprite, ReactiveProperty<float> perSecond,
             ReactiveProperty<float> count)
         {
+            _detailModel = detailModel;
             icon.sprite = detailModelSprite;
             
             perSecond.Subscribe(value =>
@@ -37,6 +45,16 @@ namespace MVC.View
             {
                 detailCount.text = value.ToString();
             }).AddTo(_disposables);
+            
+            _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Subscribe(value =>
+            {
+                upgradeButton.gameObject.GetComponentInChildren<TMP_Text>().text = value.ToString();
+            }).AddTo(_disposables);
+
+            upgradeButton.onClick.AddListener(() =>
+            {
+                _detailUpgradeStore.Upgrade(_detailModel);
+            });
         }
 
         private void OnDestroy()

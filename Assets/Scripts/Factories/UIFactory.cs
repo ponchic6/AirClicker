@@ -70,7 +70,7 @@ namespace Factories
         {
             GameObject upgradeButton = _diContainer.InstantiatePrefabResource(DetailUpgradeButtonPath, parent);
             DetailUpgradeButtonView upgradeButtonView = upgradeButton.GetComponent<DetailUpgradeButtonView>();
-            upgradeButtonView.Initialize(detailModel.Sprite,
+            upgradeButtonView.Initialize(detailModel, detailModel.Sprite,
                 _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel],
                 _aircraftDetailsStorage.DetailsCountDictionary[detailModel]);
         }
