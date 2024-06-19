@@ -31,7 +31,7 @@ namespace MVC.Controller
 
         public void DetailButtonClick(DetailModel detailModel)
         {
-            _aircraftDetailsStorage.DetailsCountDictionary[detailModel].Value++;
+            _aircraftDetailsStorage.DetailsCountDictionary[detailModel].Value += 0.3f;
         }
     }
 }

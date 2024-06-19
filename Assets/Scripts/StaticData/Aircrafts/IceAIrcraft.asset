@@ -20,3 +20,6 @@ MonoBehaviour:
     - detailModel: {fileID: 11400000, guid: 9d47690bd4d581b49af7561f5fc294c2, type: 2}
       count: 2
   id: IceAircraft
+  initialPrice: 7
+  availableOnStart: 0
+  unlockingPrice: 25

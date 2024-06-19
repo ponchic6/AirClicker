@@ -7,8 +7,10 @@ namespace StaticData
     {
         [SerializeField] private string id;
         [SerializeField] private Sprite sprite;
+        [SerializeField] private float initialUpgradePrice;
 
-        public Sprite Sprite => sprite;
         public string ID => id;
+        public Sprite Sprite => sprite;
+        public float InitialUpgradePrice => initialUpgradePrice;
     }
 }

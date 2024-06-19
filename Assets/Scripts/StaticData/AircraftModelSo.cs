@@ -9,9 +9,15 @@ namespace StaticData
         [SerializeField] private Sprite sprite;
         [SerializeField] private AircraftSerializableDictionary detailsDictionary;
         [SerializeField] private string id;
+        [SerializeField] private float initialPrice;
+        [SerializeField] private bool availableOnStart;
+        [SerializeField] private float unlockingPrice;
 
         public Sprite Sprite => sprite;
         public AircraftSerializableDictionary DetailsDictionary => detailsDictionary;
         public string Id => id;
+        public float InitialPrice => initialPrice;
+        public bool AvailableOnStart => availableOnStart;
+        public float UnblockingPrice => unlockingPrice;
     } 
 }

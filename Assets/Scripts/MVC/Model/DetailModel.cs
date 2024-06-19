@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MVC.Model
 {
-    public class DetailModel : IDetailModel
+    public class DetailModel
     {
         public string Id { get; }
         public Sprite Sprite { get; }

@@ -20,13 +20,15 @@ namespace Infrastructure
         private IUpgradePriceModel _upgradePriceModel;
         private IAircraftsPriceListModel _aircraftsPriceListModel;
         private AircraftModelsList _aircraftModelsList;
+        private IAircraftUnblockingPrices _aircraftUnblockingPrices;
 
         [Inject]
         public void Constructor(IUIFactory iuiFactory, IAircraftStorage aircraftStorage,
             IAircraftDetailsStorage aircraftDetailsStorage, AircraftModelsList aircraftModelsList,
             IDetailPerSecondModel detailPerSecondModel, IUpgradePriceModel upgradePriceModel,
-            IAircraftsPriceListModel aircraftsPriceListModel)
+            IAircraftsPriceListModel aircraftsPriceListModel, IAircraftUnblockingPrices aircraftUnblockingPrices)
         {
+            _aircraftUnblockingPrices = aircraftUnblockingPrices;
             _aircraftsPriceListModel = aircraftsPriceListModel;
             _upgradePriceModel = upgradePriceModel;
             _detailPerSecondModel = detailPerSecondModel;
@@ -60,11 +62,13 @@ namespace Infrastructure
                     dictionaryReciep[detailModel] = item.Count;
                 }
 
-                AircraftModel aircraftModel = new AircraftModel(dictionaryReciep, aircraftModelSo.Id, aircraftModelSo.Sprite);
+                AircraftModel aircraftModel = new AircraftModel(dictionaryReciep, aircraftModelSo.Id,
+                    aircraftModelSo.Sprite, aircraftModelSo.AvailableOnStart);
+                
                 _aircraftStorage.AircraftCountDictionary[aircraftModel] = new ReactiveProperty<float>();
                 _aircraftsPriceListModel.AircraftPriceDict[aircraftModel] = new ReactiveProperty<float>();
-                _aircraftsPriceListModel.AircraftPriceDict[aircraftModel].Value = 5f;
-
+                _aircraftsPriceListModel.AircraftPriceDict[aircraftModel].Value = aircraftModelSo.InitialPrice;
+                _aircraftUnblockingPrices.UnblockingPricesDict[aircraftModel] = aircraftModelSo.UnblockingPrice;
             } 
             
             _uiFactory.CreateMainClickerCanvas();
@@ -78,10 +82,11 @@ namespace Infrastructure
             _aircraftDetailsStorage.DetailsCountDictionary[detailModel] = new ReactiveProperty<float>();
                         
             _upgradePriceModel.PricesUpgradeModelDictionary[detailModel] = new ReactiveProperty<float>();
-            _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value = 9090;
+            _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value 
+                = aircraftSerializableItem.DetailModel.InitialUpgradePrice;
                         
             _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel] = new ReactiveProperty<float>();
-            _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value = 1.5f;
+            _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value = 0.1f;
         }
 
         private bool HasDictionaryDetailWithId(AircraftSerializableItem aircraftSerializableItem)

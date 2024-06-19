@@ -8,7 +8,8 @@ namespace MVC.Controller
         private readonly IMoneyStorage _moneyStorage;
         private readonly IUpgradePriceModel _upgradePriceModel;
 
-        public DetailUpgradeStore(IDetailPerSecondModel detailPerSecondModel, IMoneyStorage moneyStorage, IUpgradePriceModel upgradePriceModel)
+        public DetailUpgradeStore(IDetailPerSecondModel detailPerSecondModel, IMoneyStorage moneyStorage,
+            IUpgradePriceModel upgradePriceModel)
         {
             _moneyStorage = moneyStorage;
             _upgradePriceModel = upgradePriceModel;
@@ -16,7 +17,9 @@ namespace MVC.Controller
         }
         
         public void Upgrade(DetailModel detailModel)
-        {
+        {   
+            if (_moneyStorage.Money.Value < _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value) return;
+            
             _moneyStorage.Money.Value -= _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value;
             _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value++;
         }

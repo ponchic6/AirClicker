@@ -10,11 +10,13 @@ namespace MVC.Model
         public Dictionary<DetailModel, int> CreationRecipeDictionary => _creationRecipeDictionary;
         public string Id { get; }
         public Sprite Sprite { get; }
+        public bool IsAvailable { get; }
 
-        public AircraftModel(Dictionary<DetailModel, int> creationRecipeDictionary, string id, Sprite sprite)
+        public AircraftModel(Dictionary<DetailModel, int> creationRecipeDictionary, string id, Sprite sprite, bool isAvailable)
         {
             _creationRecipeDictionary = creationRecipeDictionary;
             Sprite = sprite;
+            IsAvailable = isAvailable;
             Id = id;
         }
     }

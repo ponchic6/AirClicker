@@ -24,12 +24,7 @@ namespace MVC.View
         {
             foreach (KeyValuePair<AircraftModel, ReactiveProperty<float>> keyValue in _aircraftStorage.AircraftCountDictionary)
             {
-                GameObject toggle = _uiFactory.CreateSelectionAircraftButton(transform, keyValue.Key);
-
-                toggle.GetComponent<Button>().onClick.AddListener(() =>
-                {
-                    _uiFactory.CreateAircraftClickPanel(keyValue.Key);
-                });  
+                _uiFactory.CreateSelectionAircraftButton(transform, keyValue.Key);
             }        
         }
     }

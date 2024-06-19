@@ -5,6 +5,7 @@ using MVC.Model;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace MVC.View
@@ -12,6 +13,7 @@ namespace MVC.View
     public class CreationAircraftButtonView : MonoBehaviour
     {
         [SerializeField] private TMP_Text countView;
+        [SerializeField] private Image aircraftIcon;
         private List<IDisposable> _disposables = new List<IDisposable>();
         private AircraftModel _aircraftModel;
         private IAircraftStorage _aircraftStorage;
@@ -34,6 +36,7 @@ namespace MVC.View
             Dispose();
         
             _aircraftModel = aircraftModel;
+            aircraftIcon.sprite = aircraftModel.Sprite;
             _aircraftStorage.AircraftCountDictionary[_aircraftModel].Subscribe(value =>
             {
                 countView.text = ((int)value).ToString();

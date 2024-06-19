@@ -13,8 +13,10 @@ namespace Infrastructure
         
         public override void InstallBindings()
         {
-            RegisterAircraftsPriceList();
+            RegisterUnblockingPrices();
             RegisterMoneyStorage();
+            RegisterUblockingController();
+            RegisterAircraftsPriceList();
             RegisterUpgradePriceModel();
             RegisterDetailPerSecond();
             RegisterUpgradeStore();
@@ -24,6 +26,18 @@ namespace Infrastructure
             RegisterAircraftStoreController();
             RegisterDetailsIncreaser();
             RegisterCanvasFactory();
+        }
+
+        private void RegisterUnblockingPrices()
+        {
+            IAircraftUnblockingPrices aircraftUnblockingPrices = Container.Instantiate<AircraftUnblockingPrices>();
+            Container.Bind<IAircraftUnblockingPrices>().FromInstance(aircraftUnblockingPrices).AsSingle();
+        }
+
+        private void RegisterUblockingController()
+        {
+            IAircraftUnblockingController aircraftUnblockingController = Container.Instantiate<AircraftUnblockingController>();
+            Container.Bind<IAircraftUnblockingController>().FromInstance(aircraftUnblockingController).AsSingle();
         }
 
         private void RegisterAircraftStoreController()

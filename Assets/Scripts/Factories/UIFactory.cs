@@ -22,9 +22,8 @@ namespace Factories
         private readonly IDetailsIncreaser _detailsIncreaser;
         private readonly IAircraftDetailsStorage _aircraftDetailsStorage;
         private readonly DiContainer _diContainer;
+        private readonly IDetailPerSecondModel _detailPerSecondModel;
         private GameObject _mainCanvas;
-        private List<IDisposable> _disposables = new List<IDisposable>();
-        private IDetailPerSecondModel _detailPerSecondModel;
 
         public UIFactory(DiContainer diContainer, IDetailsIncreaser detailsIncreaser,
             IAircraftDetailsStorage aircraftDetailsStorage, IDetailPerSecondModel detailPerSecondModel)
@@ -40,27 +39,28 @@ namespace Factories
             _mainCanvas = _diContainer.InstantiatePrefabResource(MainClickerCanvasPath);
         }
 
-        public GameObject CreateSelectionAircraftButton(Transform parent, AircraftModel aircraftModel)
+        public void CreateSelectionAircraftButton(Transform parent, AircraftModel aircraftModel)
         {
             GameObject selectionToggle = _diContainer.InstantiatePrefabResource(SelectionAircraftTogglePath, parent);
-            selectionToggle.GetComponent<SelectionAircraftButtonView>().icon.sprite = aircraftModel.Sprite;
-            selectionToggle.GetComponentInChildren<TMP_Text>().text = aircraftModel.Id.ToString();
-            return selectionToggle;
+            selectionToggle.GetComponent<SelectionAircraftButtonView>().Initialize(aircraftModel);
         }
 
         public void CreateAircraftClickPanel(AircraftModel aircraftModel)
         {
             GameObject detailsScrollRect = _mainCanvas.GetComponentInChildren<ScrollRect>().gameObject;
-            
-            Dispose();
-            _disposables.Clear();
-            
-            DeleteOldClickerPanel(detailsScrollRect);
-            
+
+            foreach (Transform transform in detailsScrollRect.transform)
+            {
+                Object.Destroy(transform.gameObject);
+            }
+
             foreach (KeyValuePair<DetailModel, int> keyValue in aircraftModel.CreationRecipeDictionary)
             {
-                CreateDetailButtonView(detailsScrollRect, keyValue);
-                SubscribeOnDetailPerSecond(keyValue);
+                GameObject detailButton = 
+                    _diContainer.InstantiatePrefabResource(DetailButtonPath, detailsScrollRect.transform);
+            
+                detailButton.GetComponent<DetailButtonView>().Initialize(_aircraftDetailsStorage, _detailsIncreaser,
+                    keyValue.Key, aircraftModel, _detailPerSecondModel);
             }
             
             _mainCanvas.GetComponentInChildren<CreationAircraftButtonView>().SetAircraftModel(aircraftModel);
@@ -74,43 +74,6 @@ namespace Factories
             upgradeButtonView.Initialize(detailModel, detailModel.Sprite,
                 _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel],
                 _aircraftDetailsStorage.DetailsCountDictionary[detailModel]);
-        }
-
-        private void SubscribeOnDetailPerSecond(KeyValuePair<DetailModel, int> keyValue)
-        {
-            Observable
-                .EveryUpdate()
-                .Subscribe(_ =>
-                {
-                    _aircraftDetailsStorage.DetailsCountDictionary[keyValue.Key].Value +=
-                        _detailPerSecondModel.DetailsPerSecondsDictionary[keyValue.Key].Value * Time.deltaTime;
-                })
-                .AddTo(_disposables);
-        }
-
-        private void CreateDetailButtonView(GameObject detailsScrollRect, KeyValuePair<DetailModel, int> keyValue)
-        {
-            GameObject detailButton = 
-                _diContainer.InstantiatePrefabResource(DetailButtonPath, detailsScrollRect.transform);
-
-            detailButton.GetComponent<DetailButtonView>().DetailName.text = keyValue.Key.Id;
-            detailButton.GetComponent<DetailButtonView>().Initialize(_aircraftDetailsStorage, _detailsIncreaser, keyValue.Key);
-        }
-
-        private void Dispose()
-        {
-            foreach (IDisposable disposable in _disposables)
-            {
-                disposable.Dispose();
-            }
-        }
-
-        private void DeleteOldClickerPanel(GameObject detailsScrollRect)
-        {
-            foreach (Transform transform in detailsScrollRect.transform)
-            {
-                Object.Destroy(transform.gameObject);
-            }
         }
     }
 }
