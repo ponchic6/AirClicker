@@ -14,6 +14,7 @@ namespace MVC.View
         [SerializeField] private TMP_Text countText;
         [SerializeField] private TMP_Text reciepCount;
         [SerializeField] private Image imageSprite;
+        [SerializeField] private Image backGround;
         
         private List<IDisposable> _disposables = new List<IDisposable>();
         private IDetailsIncreaser _detailsIncreaser;
@@ -28,12 +29,14 @@ namespace MVC.View
             _aircraftDetailsStorage = aircraftDetailsStorage;
             _detailsIncreaser = detailsIncreaser;
             _detailModel = detailModel;
-            reciepCount.text = aircraftModel.CreationRecipeDictionary[detailModel].ToString();
+            
+            reciepCount.text = aircraftModel.CreationRecipeDictionary[detailModel] + " нужно";
             imageSprite.sprite = _detailModel.Sprite;
+            backGround.sprite = _detailModel.Sprite;
 
             _aircraftDetailsStorage.DetailsCountDictionary[detailModel].Subscribe(value =>
             {
-                countText.text = ((int)value).ToString();
+                countText.text = (int)value + " имеется";
                 imageSprite.fillAmount = value - (int)value;
             }).AddTo(_disposables);
             

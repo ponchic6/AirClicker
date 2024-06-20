@@ -47,9 +47,9 @@ namespace Factories
 
         public void CreateAircraftClickPanel(AircraftModel aircraftModel)
         {
-            GameObject detailsScrollRect = _mainCanvas.GetComponentInChildren<ScrollRect>().gameObject;
+            GameObject parent = _mainCanvas.GetComponentInChildren<GridLayoutGroup>().gameObject;
 
-            foreach (Transform transform in detailsScrollRect.transform)
+            foreach (Transform transform in parent.transform)
             {
                 Object.Destroy(transform.gameObject);
             }
@@ -57,8 +57,8 @@ namespace Factories
             foreach (KeyValuePair<DetailModel, int> keyValue in aircraftModel.CreationRecipeDictionary)
             {
                 GameObject detailButton = 
-                    _diContainer.InstantiatePrefabResource(DetailButtonPath, detailsScrollRect.transform);
-            
+                    _diContainer.InstantiatePrefabResource(DetailButtonPath, parent.transform);
+                
                 detailButton.GetComponent<DetailButtonView>().Initialize(_aircraftDetailsStorage, _detailsIncreaser,
                     keyValue.Key, aircraftModel, _detailPerSecondModel);
             }

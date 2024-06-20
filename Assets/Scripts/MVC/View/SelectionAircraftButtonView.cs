@@ -16,11 +16,14 @@ namespace MVC.View
         [SerializeField] private Button unblockingButton;
 
         private IAircraftUnblockingController _aircraftUnblockingController;
+        private IAircraftUnblockingPrices _aircraftUnblockingPrices;
         private IUIFactory _uiFactory;
 
         [Inject]
-        public void Constructor(IUIFactory uiFactory, IAircraftUnblockingController aircraftUnblockingController)
+        public void Constructor(IUIFactory uiFactory, IAircraftUnblockingController aircraftUnblockingController,
+            IAircraftUnblockingPrices aircraftUnblockingPrices)
         {
+            _aircraftUnblockingPrices = aircraftUnblockingPrices;
             _aircraftUnblockingController = aircraftUnblockingController;
             _uiFactory = uiFactory;
         }
@@ -36,6 +39,9 @@ namespace MVC.View
             
             button.interactable = aircraftModel.IsAvailable;
 
+            unblockingButton.GetComponentInChildren<TMP_Text>().text =
+                _aircraftUnblockingPrices.UnblockingPricesDict[aircraftModel] + " $";
+            
             unblockingButton.onClick.AddListener(() =>
             {
                 _aircraftUnblockingController.TryUnblockAircraft(aircraftModel, button, unblockingButton);

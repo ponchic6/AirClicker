@@ -24,7 +24,7 @@ namespace MVC.View
         {
             _moneyStorage.Money.Subscribe(value =>
             {
-                money.text = value.ToString();
+                money.text = value + " $";
             }).AddTo(_disposables);
         }
 
