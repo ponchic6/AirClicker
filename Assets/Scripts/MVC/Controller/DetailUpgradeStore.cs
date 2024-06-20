@@ -21,7 +21,7 @@ namespace MVC.Controller
             if (_moneyStorage.Money.Value < _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value) return;
             
             _moneyStorage.Money.Value -= _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value;
-            _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value++;
+            _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value += detailModel.UpgradeValue;
         }
     }
 }

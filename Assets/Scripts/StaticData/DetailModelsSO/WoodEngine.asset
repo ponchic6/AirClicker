@@ -15,3 +15,4 @@ MonoBehaviour:
   id: WoodEngine
   sprite: {fileID: 21300000, guid: 8d81899930864484a9a8ee4913f7cc6d, type: 3}
   initialUpgradePrice: 3
+  upgradeValue: 0.7

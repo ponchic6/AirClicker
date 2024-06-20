@@ -15,3 +15,4 @@ MonoBehaviour:
   id: IcePlaner
   sprite: {fileID: 21300000, guid: 497f33d379243bf4f95a9490037e9918, type: 3}
   initialUpgradePrice: 1
+  upgradeValue: 0.2

@@ -15,3 +15,4 @@ MonoBehaviour:
   id: IceEngine
   sprite: {fileID: 21300000, guid: 37161f34df01a124389c56ba99506290, type: 3}
   initialUpgradePrice: 4
+  upgradeValue: 0.3

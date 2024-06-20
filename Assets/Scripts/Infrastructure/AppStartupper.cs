@@ -77,7 +77,7 @@ namespace Infrastructure
         private void InitializeDetailModel(AircraftSerializableItem aircraftSerializableItem)
         {
             DetailModel detailModel = new DetailModel(aircraftSerializableItem.DetailModel.ID,
-                aircraftSerializableItem.DetailModel.Sprite);
+                aircraftSerializableItem.DetailModel.Sprite, aircraftSerializableItem.DetailModel.UpgradeValue);
                         
             _aircraftDetailsStorage.DetailsCountDictionary[detailModel] = new ReactiveProperty<float>();
                         
@@ -86,7 +86,6 @@ namespace Infrastructure
                 = aircraftSerializableItem.DetailModel.InitialUpgradePrice;
                         
             _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel] = new ReactiveProperty<float>();
-            _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value = 0.1f;
         }
 
         private bool HasDictionaryDetailWithId(AircraftSerializableItem aircraftSerializableItem)

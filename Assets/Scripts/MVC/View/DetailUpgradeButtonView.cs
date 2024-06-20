@@ -43,7 +43,7 @@ namespace MVC.View
             
             count.Subscribe(value =>
             {
-                detailCount.text = value.ToString();
+                detailCount.text = decimal.Round((decimal)value, 2).ToString();
             }).AddTo(_disposables);
             
             _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Subscribe(value =>
