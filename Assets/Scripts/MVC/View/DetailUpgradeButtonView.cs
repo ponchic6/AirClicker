@@ -23,8 +23,7 @@ namespace MVC.View
         private DetailModel _detailModel;
 
         [Inject]
-        public void Constructor(IDetailUpgradeStore detailUpgradeStore,
-            IUpgradePriceModel upgradePriceModel)
+        public void Constructor(IDetailUpgradeStore detailUpgradeStore, IUpgradePriceModel upgradePriceModel)
         {
             _upgradePriceModel = upgradePriceModel;
             _detailUpgradeStore = detailUpgradeStore;
@@ -38,17 +37,17 @@ namespace MVC.View
             
             perSecond.Subscribe(value =>
             {
-                currentDetailPerSecond.text = value.ToString();
+                currentDetailPerSecond.text = value + " в сек.";
             }).AddTo(_disposables);
             
             count.Subscribe(value =>
             {
-                detailCount.text = decimal.Round((decimal)value, 2).ToString();
+                detailCount.text = decimal.Round((decimal)value, 2) + " шт.";
             }).AddTo(_disposables);
             
             _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Subscribe(value =>
             {
-                upgradeButton.gameObject.GetComponentInChildren<TMP_Text>().text = value.ToString();
+                upgradeButton.gameObject.GetComponentInChildren<TMP_Text>().text = value + " $";
             }).AddTo(_disposables);
 
             upgradeButton.onClick.AddListener(() =>

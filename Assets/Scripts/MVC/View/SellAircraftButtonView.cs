@@ -34,7 +34,7 @@ namespace MVC.View
                 .AircraftPriceDict[aircraftModel]
                 .Subscribe(value =>
                 {
-                    price.text = value.ToString();
+                    price.text = value + " $";
                 })
                 .AddTo(_disposables);
             
