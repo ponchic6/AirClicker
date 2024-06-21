@@ -22,6 +22,7 @@ namespace MVC.Controller
             
             _moneyStorage.Money.Value -= _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value;
             _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value += detailModel.UpgradeValue;
+            _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value *= 1.15f;
         }
     }
 }

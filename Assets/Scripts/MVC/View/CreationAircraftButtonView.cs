@@ -45,12 +45,11 @@ namespace MVC.View
 
         private void Dispose()
         {   
-            if (_disposables.Count == 0) return;
-        
             foreach (IDisposable disposable in _disposables)
             {
                 disposable.Dispose();
             }
+            
             _disposables.Clear();
         }
     }
