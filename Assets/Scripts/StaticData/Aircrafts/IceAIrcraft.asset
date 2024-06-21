@@ -16,10 +16,10 @@ MonoBehaviour:
   detailsDictionary:
     aircraftSerializableItem:
     - detailModel: {fileID: 11400000, guid: 2787bc09bf04d1d42a8579f674598db5, type: 2}
-      count: 5
+      count: 20
     - detailModel: {fileID: 11400000, guid: 9d47690bd4d581b49af7561f5fc294c2, type: 2}
-      count: 2
+      count: 15
   id: IceAircraft
-  initialPrice: 7
+  initialPrice: 5
   availableOnStart: 0
   unlockingPrice: 25

@@ -17,6 +17,7 @@ namespace Infrastructure
             RegisterMoneyStorage();
             RegisterUblockingController();
             RegisterAircraftsPriceList();
+            RegisterAircraftPriceListController();
             RegisterUpgradePriceModel();
             RegisterDetailPerSecond();
             RegisterUpgradeStore();
@@ -26,6 +27,13 @@ namespace Infrastructure
             RegisterAircraftStoreController();
             RegisterDetailsIncreaser();
             RegisterCanvasFactory();
+        }
+
+        private void RegisterAircraftPriceListController()
+        {
+            IAircraftPriceListController aircraftPriceListController =
+                Container.Instantiate<AircraftPriceListController>();
+            Container.Bind<IAircraftPriceListController>().FromInstance(aircraftPriceListController).AsSingle();
         }
 
         private void RegisterUnblockingPrices()

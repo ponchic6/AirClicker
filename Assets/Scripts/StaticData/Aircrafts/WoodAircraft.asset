@@ -20,5 +20,6 @@ MonoBehaviour:
     - detailModel: {fileID: 11400000, guid: 50ae05e80ed02fa4e88c2792f2f9024e, type: 2}
       count: 3
   id: WoodAIrcraft
-  initialPrice: 3
+  initialPrice: 1
   availableOnStart: 1
+  unlockingPrice: 0

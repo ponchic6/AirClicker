@@ -24,7 +24,7 @@ namespace MVC.View
         {
             _moneyStorage.Money.Subscribe(value =>
             {
-                money.text = value + " $";
+                money.text = decimal.Round((decimal)value, 2) + " $";
             }).AddTo(_disposables);
         }
 

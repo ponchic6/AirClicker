@@ -17,11 +17,13 @@ namespace MVC.View
         private IAircraftsPriceListModel _aircraftsPriceListModel;
         private IList<IDisposable> _disposables = new List<IDisposable>();
         private IAircraftStoreController _aircraftStoreController;
+        private IAircraftPriceListController _aircraftsPriceListController;
 
         [Inject]
         public void Constructor(IAircraftsPriceListModel aircraftsPriceListModel,
-            IAircraftStoreController aircraftStoreController)
+            IAircraftStoreController aircraftStoreController, IAircraftPriceListController aircraftPriceListController)
         {
+            _aircraftsPriceListController = aircraftPriceListController;
             _aircraftStoreController = aircraftStoreController;
             _aircraftsPriceListModel = aircraftsPriceListModel;
         }
@@ -29,12 +31,14 @@ namespace MVC.View
         public void BindSellAircraftButton(AircraftModel aircraftModel)
         {   
             button.onClick.RemoveAllListeners();
-            
+
+            _aircraftsPriceListController.StartDynamicPriceChange(aircraftModel);
+                
             _aircraftsPriceListModel
                 .AircraftPriceDict[aircraftModel]
                 .Subscribe(value =>
                 {
-                    price.text = value + " $";
+                    price.text = decimal.Round((decimal)value, 2) + " $";
                 })
                 .AddTo(_disposables);
             
