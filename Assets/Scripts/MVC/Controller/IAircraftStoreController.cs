@@ -4,6 +4,6 @@ namespace MVC.Controller
 {
     public interface IAircraftStoreController
     {
-        public void TrySellAircraft(AircraftModel aircraftModel);
+        public bool TrySellAircraft(AircraftModel aircraftModel);
     }
 }

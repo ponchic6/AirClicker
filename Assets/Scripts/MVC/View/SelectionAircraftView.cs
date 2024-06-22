@@ -3,7 +3,6 @@ using Factories;
 using MVC.Model;
 using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace MVC.View
@@ -25,7 +24,7 @@ namespace MVC.View
             foreach (KeyValuePair<AircraftModel, ReactiveProperty<float>> keyValue in _aircraftStorage.AircraftCountDictionary)
             {
                 _uiFactory.CreateSelectionAircraftButton(transform, keyValue.Key);
-            }        
+            }
         }
     }
 }

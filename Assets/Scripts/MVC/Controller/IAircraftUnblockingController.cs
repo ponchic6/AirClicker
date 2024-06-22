@@ -5,6 +5,6 @@ namespace MVC.Controller
 {
     public interface IAircraftUnblockingController
     {
-        public void TryUnblockAircraft(AircraftModel aircraftModel, Button button, Button unblockingButton);
+        public bool TryUnblockAircraft(AircraftModel aircraftModel, Button button, Button unblockingButton);
     }
 }

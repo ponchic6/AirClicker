@@ -7,14 +7,14 @@ namespace StaticData
     public class AircraftModelSo : ScriptableObject
     {
         [SerializeField] private Sprite sprite;
-        [SerializeField] private AircraftSerializableDictionary detailsDictionary;
+        [SerializeField] private AircraftItemsContainer aircraftItemsContainer;
         [SerializeField] private string id;
         [SerializeField] private float initialPrice;
         [SerializeField] private bool availableOnStart;
         [SerializeField] private float unlockingPrice;
 
         public Sprite Sprite => sprite;
-        public AircraftSerializableDictionary DetailsDictionary => detailsDictionary;
+        public AircraftItemsContainer AircraftItemsContainer => aircraftItemsContainer;
         public string Id => id;
         public float InitialPrice => initialPrice;
         public bool AvailableOnStart => availableOnStart;

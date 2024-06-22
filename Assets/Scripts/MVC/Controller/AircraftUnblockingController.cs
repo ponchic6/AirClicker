@@ -14,13 +14,14 @@ namespace MVC.Controller
             _aircraftUnblockingPrices = aircraftUnblockingPrices;
         }
         
-        public void TryUnblockAircraft(AircraftModel aircraftModel, Button button, Button unblockingButton)
+        public bool TryUnblockAircraft(AircraftModel aircraftModel, Button button, Button unblockingButton)
         {
-            if (_moneyStorage.Money.Value < _aircraftUnblockingPrices.UnblockingPricesDict[aircraftModel]) return;
+            if (_moneyStorage.Money.Value < _aircraftUnblockingPrices.UnblockingPricesDict[aircraftModel]) return false;
 
             _moneyStorage.Money.Value -= _aircraftUnblockingPrices.UnblockingPricesDict[aircraftModel];
             button.interactable = true;
             unblockingButton.gameObject.SetActive(false);
+            return true;
         }
     }
 }

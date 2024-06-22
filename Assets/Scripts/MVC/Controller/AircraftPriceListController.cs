@@ -11,7 +11,7 @@ namespace MVC.Controller
     {
         private List<IDisposable> _disposables = new List<IDisposable>();
         private IAircraftsPriceListModel _aircraftsPriceListModel;
-        private float _cashedBasePrice;
+        private float _cachedBasePrice;
         private AircraftModel _cashedAirModel;
 
         public AircraftPriceListController(IAircraftsPriceListModel aircraftsPriceListModel)
@@ -23,17 +23,17 @@ namespace MVC.Controller
         {
             if (_cashedAirModel != null)
             {
-                _aircraftsPriceListModel.AircraftPriceDict[_cashedAirModel].Value = _cashedBasePrice;
+                _aircraftsPriceListModel.SetPrice(_cashedAirModel, _cachedBasePrice);
             }
             
             DisposeAll();
 
-            _cashedBasePrice = _aircraftsPriceListModel.AircraftPriceDict[aircraftModel].Value;
+            _cachedBasePrice = _aircraftsPriceListModel.GetPrice(aircraftModel);
 
             Observable.Timer(TimeSpan.FromSeconds(0.6f)).Repeat().Subscribe(_ =>
-            {
-                _aircraftsPriceListModel.AircraftPriceDict[aircraftModel].Value =
-                    _cashedBasePrice + Mathf.Sin(Time.time * 0.1f * Mathf.PI) * _cashedBasePrice * Random.value * 2;
+            {   
+                _aircraftsPriceListModel.SetPrice(aircraftModel,
+                    _cachedBasePrice + Mathf.Sin(Time.time * 0.1f * Mathf.PI) * _cachedBasePrice * Random.value * 2);
             }).AddTo(_disposables);
             
             _cashedAirModel = aircraftModel;

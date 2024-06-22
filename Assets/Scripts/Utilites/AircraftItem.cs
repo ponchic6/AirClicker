@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Utilites
 {
     [Serializable]
-    public class AircraftSerializableItem
+    public class AircraftItem
     {
         [SerializeField] private DetailModelSO detailModel;
         [SerializeField] private int count;

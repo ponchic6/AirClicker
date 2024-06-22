@@ -4,6 +4,6 @@ namespace MVC.Controller
 {
     public interface IDetailUpgradeStore
     {
-        public void Upgrade(DetailModel detailModel);
+        public bool Upgrade(DetailModel detailModel);
     }
 }

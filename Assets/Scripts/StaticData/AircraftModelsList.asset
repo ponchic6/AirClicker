@@ -13,5 +13,12 @@ MonoBehaviour:
   m_Name: AircraftModelsList
   m_EditorClassIdentifier: 
   aircraftModels:
-  - {fileID: 11400000, guid: b2d31f5a6d7d9954c93cd8e3408f54e1, type: 2}
   - {fileID: 11400000, guid: 1791c2a08f0ad924e84b7dc48834a5d8, type: 2}
+  - {fileID: 11400000, guid: e3ceae58cd9e8014fb55d7aec14249a0, type: 2}
+  - {fileID: 11400000, guid: 997eed5f8f718a240b968a08263795ba, type: 2}
+  - {fileID: 11400000, guid: f90447e5f0f0d2a4d85fd89042d22b0f, type: 2}
+  - {fileID: 11400000, guid: 8b98a7e00f073924bbc88aaca6f4f3e4, type: 2}
+  - {fileID: 11400000, guid: d677ec273831ec74f8fabff1c981a5a7, type: 2}
+  - {fileID: 11400000, guid: d677ec273831ec74f8fabff1c981a5a7, type: 2}
+  - {fileID: 11400000, guid: d677ec273831ec74f8fabff1c981a5a7, type: 2}
+  - {fileID: 11400000, guid: d677ec273831ec74f8fabff1c981a5a7, type: 2}

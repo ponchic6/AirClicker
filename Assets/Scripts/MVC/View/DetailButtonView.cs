@@ -25,14 +25,9 @@ namespace MVC.View
         public void Initialize(IAircraftDetailsStorage aircraftDetailsStorage, IDetailsIncreaser detailsIncreaser,
             DetailModel detailModel, AircraftModel aircraftModel, IDetailPerSecondModel detailPerSecondModel)
         {
-            _detailPerSecondModel = detailPerSecondModel;
-            _aircraftDetailsStorage = aircraftDetailsStorage;
-            _detailsIncreaser = detailsIncreaser;
-            _detailModel = detailModel;
-            
-            reciepCount.text = aircraftModel.CreationRecipeDictionary[detailModel] + " нужно";
-            imageSprite.sprite = _detailModel.Sprite;
-            backGround.sprite = _detailModel.Sprite;
+            CachedFields(aircraftDetailsStorage, detailsIncreaser, detailModel, detailPerSecondModel);
+
+            SetStaticView(detailModel, aircraftModel);
 
             _aircraftDetailsStorage.DetailsCountDictionary[detailModel].Subscribe(value =>
             {
@@ -48,6 +43,22 @@ namespace MVC.View
                         _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value * Time.deltaTime;
                 })
                 .AddTo(_disposables);
+        }
+
+        private void SetStaticView(DetailModel detailModel, AircraftModel aircraftModel)
+        {
+            reciepCount.text = aircraftModel.CreationRecipeDictionary[detailModel] + " нужно";
+            imageSprite.sprite = _detailModel.Sprite;
+            backGround.sprite = _detailModel.Sprite;
+        }
+
+        private void CachedFields(IAircraftDetailsStorage aircraftDetailsStorage, IDetailsIncreaser detailsIncreaser,
+            DetailModel detailModel, IDetailPerSecondModel detailPerSecondModel)
+        {
+            _detailPerSecondModel = detailPerSecondModel;
+            _aircraftDetailsStorage = aircraftDetailsStorage;
+            _detailsIncreaser = detailsIncreaser;
+            _detailModel = detailModel;
         }
 
         public void DetailButtonClick() => _detailsIncreaser.DetailButtonClick(_detailModel);

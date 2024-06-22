@@ -16,12 +16,13 @@ namespace MVC.Controller
             _moneyStorage = moneyStorage;
         }
         
-        public void TrySellAircraft(AircraftModel aircraftModel)
+        public bool TrySellAircraft(AircraftModel aircraftModel)
         {
-            if (_aircraftStorage.AircraftCountDictionary[aircraftModel].Value < 1) return;
+            if (_aircraftStorage.AircraftCountDictionary[aircraftModel].Value < 1) return false;
 
-            _moneyStorage.Money.Value += _aircraftsPriceListModel.AircraftPriceDict[aircraftModel].Value;
+            _moneyStorage.Money.Value += _aircraftsPriceListModel.GetPrice(aircraftModel);
             _aircraftStorage.AircraftCountDictionary[aircraftModel].Value -= 1;
+            return true;
         }
     }
 }

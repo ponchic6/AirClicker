@@ -16,13 +16,14 @@ namespace MVC.Controller
             _detailPerSecondModel = detailPerSecondModel;
         }
         
-        public void Upgrade(DetailModel detailModel)
+        public bool Upgrade(DetailModel detailModel)
         {   
-            if (_moneyStorage.Money.Value < _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value) return;
+            if (_moneyStorage.Money.Value < _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value) return false;
             
             _moneyStorage.Money.Value -= _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value;
             _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value += detailModel.UpgradeValue;
             _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value *= 1.15f;
+            return true;
         }
     }
 }
