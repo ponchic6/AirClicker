@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: PaperAircraft
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 80205c6fd1535364fad9a6a17e0de145, type: 3}
-  detailsDictionary:
-    aircraftSerializableItem:
+  aircraftItemsContainer:
+    aircraftItem:
     - detailModel: {fileID: 11400000, guid: 8cc74d2934a8ba4429ed3485fbdd24bc, type: 2}
-      count: 2
+      count: 15
     - detailModel: {fileID: 11400000, guid: b22c22b3029c5c943a7101c993e8bf90, type: 2}
-      count: 3
+      count: 10
   id: PaperAircraft
-  initialPrice: 0
+  initialPrice: 1
   availableOnStart: 1
   unlockingPrice: 0

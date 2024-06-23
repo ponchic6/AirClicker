@@ -13,17 +13,9 @@ MonoBehaviour:
   m_Name: DC-3
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: ae6d4faad3102034ca86bd07aa0229c7, type: 3}
-  detailsDictionary:
-    aircraftSerializableItem:
-    - detailModel: {fileID: 11400000, guid: 8e8ca1d98c549744592dc9da94a7f5e8, type: 2}
-      count: 1
-    - detailModel: {fileID: 11400000, guid: a14fc63534fc6e04e9cecd6bc8e6e68d, type: 2}
-      count: 1
-    - detailModel: {fileID: 11400000, guid: 519f1be4516f9ef499761984e24dfd3c, type: 2}
-      count: 1
-    - detailModel: {fileID: 11400000, guid: cff2813c0721dbe44b9085f24e2ed3b3, type: 2}
-      count: 1
+  aircraftItemsContainer:
+    aircraftItem: []
   id: DC-3
-  initialPrice: 0
-  availableOnStart: 1
+  initialPrice: 10000
+  availableOnStart: 0
   unlockingPrice: 0

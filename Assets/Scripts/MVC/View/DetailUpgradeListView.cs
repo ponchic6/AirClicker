@@ -22,11 +22,24 @@ namespace MVC.View
             _aircraftDetailsStorage = aircraftDetailsStorage;
             _detailPerSecondModel = detailPerSecondModel;
         }
-
-        private void Start()
+        
+        private void OnEnable()
         {
-            foreach (KeyValuePair<DetailModel, ReactiveProperty<float>> keyValue in _aircraftDetailsStorage.DetailsCountDictionary)
+            RerenderViewUpgradeList();
+        }
+
+        private void RerenderViewUpgradeList()
+        {
+            foreach (Transform child in transform)
             {
+                Destroy(child.transform.gameObject);
+            }
+
+            foreach (KeyValuePair<DetailModel, ReactiveProperty<float>> keyValue in _aircraftDetailsStorage
+                         .DetailsCount)
+            {
+                if (!keyValue.Key.Available) return;
+                
                 _uiFactory.CreateUpgradeDetailButton(transform, keyValue.Key,
                     _detailPerSecondModel.DetailsPerSecondsDictionary[keyValue.Key]);
             }

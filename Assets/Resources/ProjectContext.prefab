@@ -75,3 +75,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aircraftModelsList: {fileID: 11400000, guid: 3e196a45054f20e4faae131569135969, type: 2}
+  comboStaticData: {fileID: 11400000, guid: 54b8d56e380608e418551fad99eb31fa, type: 2}

@@ -11,7 +11,6 @@ namespace MVC.View
     public class SelectionAircraftButtonView : MonoBehaviour
     {
         [SerializeField] private Image icon;
-        [SerializeField] private TMP_Text aircraftId;
         [SerializeField] private Button button;
         [SerializeField] private Button unblockingButton;
 
@@ -31,7 +30,6 @@ namespace MVC.View
         public void Initialize(AircraftModel aircraftModel)
         {
             icon.sprite = aircraftModel.Sprite;
-            aircraftId.text = aircraftModel.Id;
             button.onClick.AddListener(() =>
             {
                 _uiFactory.CreateAircraftClickPanel(aircraftModel);

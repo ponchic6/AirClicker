@@ -55,13 +55,15 @@ namespace Infrastructure
 
                 AircraftModel aircraftModel = InitializeAircraft(aircraftModelSo);
 
-                _aircraftStorage.AircraftCountDictionary[aircraftModel] = new ReactiveProperty<float>();
+                _aircraftStorage.AircraftCount[aircraftModel] = new ReactiveProperty<float>();
+                _aircraftStorage.AircraftList.Add(aircraftModel);
                 _aircraftsPriceListModel.AircraftPriceDict[aircraftModel] = new ReactiveProperty<float>();
                 _aircraftsPriceListModel.AircraftPriceDict[aircraftModel].Value = aircraftModelSo.InitialPrice;
                 _aircraftUnblockingPrices.UnblockingPricesDict[aircraftModel] = aircraftModelSo.UnblockingPrice;
             } 
             
-            _uiFactory.CreateMainClickerCanvas();
+            GameObject mainCanvas = _uiFactory.CreateMainClickerCanvas();
+            mainCanvas.GetComponentInChildren<Camera>().gameObject.transform.SetParent(null);
         }
 
         private AircraftModel InitializeAircraft(AircraftModelSo aircraftModelSo)
@@ -70,9 +72,11 @@ namespace Infrastructure
 
             foreach (AircraftItem item in aircraftModelSo.AircraftItemsContainer.AircraftItem)
             {
-                DetailModel detailModel = _aircraftDetailsStorage.DetailsCountDictionary.First(pair =>
+                DetailModel detailModel = _aircraftDetailsStorage.DetailsCount.First(pair =>
                     pair.Key.Id == item.DetailModel.ID).Key;
                 dictionaryReciep[detailModel] = item.Count;
+
+                detailModel.Available = aircraftModelSo.AvailableOnStart;
             }
 
             AircraftModel aircraftModel = new AircraftModel(dictionaryReciep, aircraftModelSo.Id,
@@ -84,9 +88,9 @@ namespace Infrastructure
         {
             DetailModel detailModel = new DetailModel(aircraftItem.DetailModel.ID,
                 aircraftItem.DetailModel.Sprite, aircraftItem.DetailModel.UpgradeValue);
-                        
-            _aircraftDetailsStorage.DetailsCountDictionary[detailModel] = new ReactiveProperty<float>();
-                        
+
+            _aircraftDetailsStorage.DetailsCount[detailModel] = new ReactiveProperty<float>();
+
             _upgradePriceModel.PricesUpgradeModelDictionary[detailModel] = new ReactiveProperty<float>();
             _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value 
                 = aircraftItem.DetailModel.InitialUpgradePrice;
@@ -96,7 +100,7 @@ namespace Infrastructure
 
         private bool HasDictionaryDetailWithId(AircraftItem aircraftItem)
         {
-            return _aircraftDetailsStorage.DetailsCountDictionary.Keys.Any(detail => detail.Id == aircraftItem.DetailModel.ID);
+            return _aircraftDetailsStorage.DetailsCount.Keys.Any(detail => detail.Id == aircraftItem.DetailModel.ID);
         }
     }
 }

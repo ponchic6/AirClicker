@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: AirBall
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 8c4a53dd2aba39b44ad9c86cc00adfb7, type: 3}
-  detailsDictionary:
-    aircraftSerializableItem:
-    - detailModel: {fileID: 11400000, guid: 9779924550355224a8b90571e52c63fc, type: 2}
-      count: 1
+  aircraftItemsContainer:
+    aircraftItem:
     - detailModel: {fileID: 11400000, guid: 5a165dd211ee8db4ea5b9cf24a20c9ec, type: 2}
-      count: 1
+      count: 25
+    - detailModel: {fileID: 11400000, guid: 9779924550355224a8b90571e52c63fc, type: 2}
+      count: 40
   id: AirBall
-  initialPrice: 3
-  availableOnStart: 1
-  unlockingPrice: 0
+  initialPrice: 5
+  availableOnStart: 0
+  unlockingPrice: 100

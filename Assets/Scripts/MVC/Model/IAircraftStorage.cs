@@ -5,6 +5,7 @@ namespace MVC.Model
 {
     public interface IAircraftStorage
     {
-        public Dictionary<AircraftModel, ReactiveProperty<float>> AircraftCountDictionary { get; }
+        public Dictionary<AircraftModel, ReactiveProperty<float>> AircraftCount { get; }
+        public List<AircraftModel> AircraftList { get; }
     }
 }

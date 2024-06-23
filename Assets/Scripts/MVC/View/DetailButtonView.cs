@@ -11,57 +11,67 @@ namespace MVC.View
 {
     public class DetailButtonView : MonoBehaviour
     {
-        [SerializeField] private TMP_Text countText;
-        [SerializeField] private TMP_Text reciepCount;
         [SerializeField] private Image imageSprite;
         [SerializeField] private Image backGround;
+        [SerializeField] private TMP_Text neceseryCount;
         
         private List<IDisposable> _disposables = new List<IDisposable>();
         private IDetailsIncreaser _detailsIncreaser;
         private IAircraftDetailsStorage _aircraftDetailsStorage;
         private IDetailPerSecondModel _detailPerSecondModel;
         private DetailModel _detailModel;
+        private AircraftModel _aircraftModel;
+
+        public DetailModel DetailModel => _detailModel;
 
         public void Initialize(IAircraftDetailsStorage aircraftDetailsStorage, IDetailsIncreaser detailsIncreaser,
             DetailModel detailModel, AircraftModel aircraftModel, IDetailPerSecondModel detailPerSecondModel)
         {
-            CachedFields(aircraftDetailsStorage, detailsIncreaser, detailModel, detailPerSecondModel);
-
+            CachedFields(aircraftDetailsStorage, detailsIncreaser, detailModel, detailPerSecondModel, aircraftModel);
             SetStaticView(detailModel, aircraftModel);
+            FillAmountImageSubscribe(detailModel, aircraftModel);
+            AutoIncreaseDetailSubscribe(detailModel);
+        }
 
-            _aircraftDetailsStorage.DetailsCountDictionary[detailModel].Subscribe(value =>
-            {
-                countText.text = (int)value + " имеется";
-                imageSprite.fillAmount = value - (int)value;
-            }).AddTo(_disposables);
-            
+        public void DetailButtonClick() => _detailsIncreaser.DetailButtonClick(_detailModel, _aircraftModel);
+
+        private void AutoIncreaseDetailSubscribe(DetailModel detailModel)
+        {
             Observable
                 .EveryUpdate()
                 .Subscribe(_ =>
                 {
-                    _aircraftDetailsStorage.DetailsCountDictionary[detailModel].Value +=
+                    _aircraftDetailsStorage.DetailsCount[detailModel].Value +=
                         _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel].Value * Time.deltaTime;
                 })
                 .AddTo(_disposables);
         }
 
+        private void FillAmountImageSubscribe(DetailModel detailModel, AircraftModel aircraftModel)
+        {
+            _aircraftDetailsStorage.DetailsCount[detailModel].Subscribe(value =>
+            {
+                imageSprite.fillAmount = value / aircraftModel.CreationRecipe[detailModel]
+                                         - (int)(value / aircraftModel.CreationRecipe[detailModel]);
+            }).AddTo(_disposables);
+        }
+
         private void SetStaticView(DetailModel detailModel, AircraftModel aircraftModel)
         {
-            reciepCount.text = aircraftModel.CreationRecipeDictionary[detailModel] + " нужно";
+            neceseryCount.text = aircraftModel.CreationRecipe[detailModel] + " нужно";
             imageSprite.sprite = _detailModel.Sprite;
             backGround.sprite = _detailModel.Sprite;
         }
 
         private void CachedFields(IAircraftDetailsStorage aircraftDetailsStorage, IDetailsIncreaser detailsIncreaser,
-            DetailModel detailModel, IDetailPerSecondModel detailPerSecondModel)
+            DetailModel detailModel, IDetailPerSecondModel detailPerSecondModel, AircraftModel aircraftModel)
         {
+            _aircraftModel = aircraftModel;
             _detailPerSecondModel = detailPerSecondModel;
             _aircraftDetailsStorage = aircraftDetailsStorage;
             _detailsIncreaser = detailsIncreaser;
             _detailModel = detailModel;
         }
-
-        public void DetailButtonClick() => _detailsIncreaser.DetailButtonClick(_detailModel);
 
         private void OnDestroy()
         {

@@ -4,7 +4,7 @@ namespace MVC.Controller
 {
     public interface IDetailsIncreaser
     {
-        public void DetailButtonClick(DetailModel detailModel);
-        public void CreationAircraftClick(AircraftModel aircraftModel);
+        public void DetailButtonClick(DetailModel detailModel, AircraftModel aircraftModel);
+        public void TryCreateAircraft(AircraftModel aircraftModel);
     }
 }

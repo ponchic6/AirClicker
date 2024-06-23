@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MVC.Model;
+using UnityEngine;
 
 namespace MVC.Controller
 {
@@ -7,31 +8,35 @@ namespace MVC.Controller
     {
         private readonly IAircraftDetailsStorage _aircraftDetailsStorage;
         private readonly IAircraftStorage _aircraftStorage;
+        private IClickComboController _clickComboController;
 
-        public DetailsIncreaser(IAircraftDetailsStorage aircraftDetailsStorage, IAircraftStorage aircraftStorage)
+        public DetailsIncreaser(IAircraftDetailsStorage aircraftDetailsStorage, IAircraftStorage aircraftStorage,
+            IClickComboController clickComboController)
         {
+            _clickComboController = clickComboController;
             _aircraftStorage = aircraftStorage;
             _aircraftDetailsStorage = aircraftDetailsStorage;
         }
-
-        public void CreationAircraftClick(AircraftModel aircraftModel)
+        
+        public void DetailButtonClick(DetailModel detailModel, AircraftModel aircraftModel)
         {
-            foreach (KeyValuePair<DetailModel, int> keyValue in aircraftModel.CreationRecipeDictionary)
-            {
-                if (_aircraftDetailsStorage.DetailsCountDictionary[keyValue.Key].Value < keyValue.Value) return;
-            }
-
-            _aircraftStorage.AircraftCountDictionary[aircraftModel].Value++;
-            
-            foreach (KeyValuePair<DetailModel, int> keyValue in aircraftModel.CreationRecipeDictionary)
-            {
-                _aircraftDetailsStorage.DetailsCountDictionary[keyValue.Key].Value -= keyValue.Value;
-            }
+            _aircraftDetailsStorage.DetailsCount[detailModel].Value +=
+                aircraftModel.CreationRecipe[detailModel] * Random.value * 0.5f * (1 + _clickComboController.ComboClickMultiplier);
         }
 
-        public void DetailButtonClick(DetailModel detailModel)
+        public void TryCreateAircraft(AircraftModel aircraftModel)
         {
-            _aircraftDetailsStorage.DetailsCountDictionary[detailModel].Value += 0.3f;
+            foreach (KeyValuePair<DetailModel, int> keyValue in aircraftModel.CreationRecipe)
+            {
+                if (_aircraftDetailsStorage.DetailsCount[keyValue.Key].Value < keyValue.Value) return;
+            }
+
+            _aircraftStorage.AircraftCount[aircraftModel].Value++;
+
+            foreach (KeyValuePair<DetailModel, int> keyValue in aircraftModel.CreationRecipe)
+            {
+                _aircraftDetailsStorage.DetailsCount[keyValue.Key].Value -= keyValue.Value;
+            }
         }
     }
 }

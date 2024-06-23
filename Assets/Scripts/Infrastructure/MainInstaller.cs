@@ -10,9 +10,11 @@ namespace Infrastructure
     public class MainInstaller : MonoInstaller
     {
         [SerializeField] private AircraftModelsList aircraftModelsList;
+        [SerializeField] private ComboStaticData comboStaticData;
         
         public override void InstallBindings()
         {
+            RegisterComboStaticData();
             RegisterUnblockingPrices();
             RegisterMoneyStorage();
             RegisterUblockingController();
@@ -25,8 +27,20 @@ namespace Infrastructure
             RegisterAircraftDetailsStorage();
             RegisterAircraftStorage();
             RegisterAircraftStoreController();
+            RegisterClickComboController();
             RegisterDetailsIncreaser();
             RegisterCanvasFactory();
+        }
+
+        private void RegisterComboStaticData()
+        {
+            Container.Bind<ComboStaticData>().FromInstance(comboStaticData).AsSingle();
+        }
+
+        private void RegisterClickComboController()
+        {
+            IClickComboController clickComboController = Container.Instantiate<ClickComboController>();
+            Container.Bind<IClickComboController>().FromInstance(clickComboController).AsSingle();
         }
 
         private void RegisterAircraftPriceListController()

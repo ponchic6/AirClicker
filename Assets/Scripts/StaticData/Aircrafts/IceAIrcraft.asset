@@ -13,12 +13,8 @@ MonoBehaviour:
   m_Name: IceAIrcraft
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: d305fa1d8346881428d0a56e5f6b1cca, type: 3}
-  detailsDictionary:
-    aircraftSerializableItem:
-    - detailModel: {fileID: 11400000, guid: 2787bc09bf04d1d42a8579f674598db5, type: 2}
-      count: 20
-    - detailModel: {fileID: 11400000, guid: 9d47690bd4d581b49af7561f5fc294c2, type: 2}
-      count: 15
+  aircraftItemsContainer:
+    aircraftItem: []
   id: IceAircraft
   initialPrice: 5
   availableOnStart: 0

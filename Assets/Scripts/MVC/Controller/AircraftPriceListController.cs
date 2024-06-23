@@ -31,9 +31,10 @@ namespace MVC.Controller
             _cachedBasePrice = _aircraftsPriceListModel.GetPrice(aircraftModel);
 
             Observable.Timer(TimeSpan.FromSeconds(0.6f)).Repeat().Subscribe(_ =>
-            {   
-                _aircraftsPriceListModel.SetPrice(aircraftModel,
-                    _cachedBasePrice + Mathf.Sin(Time.time * 0.1f * Mathf.PI) * _cachedBasePrice * Random.value * 2);
+            {
+                float price = 0.7f * _cachedBasePrice +
+                              Mathf.Sin(Time.time * 0.1f * Mathf.PI) * _cachedBasePrice + Random.value * _cachedBasePrice; 
+                _aircraftsPriceListModel.SetPrice(aircraftModel, price);
             }).AddTo(_disposables);
             
             _cashedAirModel = aircraftModel;

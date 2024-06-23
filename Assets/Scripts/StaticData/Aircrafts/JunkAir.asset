@@ -13,15 +13,9 @@ MonoBehaviour:
   m_Name: JunkAir
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 0ac2afcbcf4a28b42bcecd5dc21268f6, type: 3}
-  detailsDictionary:
-    aircraftSerializableItem:
-    - detailModel: {fileID: 11400000, guid: 47ab7a1268fcd614aa97031f4ac442a0, type: 2}
-      count: 1
-    - detailModel: {fileID: 11400000, guid: 171018e475ed5564fa01a782a5525555, type: 2}
-      count: 1
-    - detailModel: {fileID: 11400000, guid: fd7dc80e8e6396a4a9514c84aa923f0e, type: 2}
-      count: 1
-  id: JunkAir
+  aircraftItemsContainer:
+    aircraftItem: []
+  id: Junk Air
   initialPrice: 3
-  availableOnStart: 1
-  unlockingPrice: 0
+  availableOnStart: 0
+  unlockingPrice: 1500

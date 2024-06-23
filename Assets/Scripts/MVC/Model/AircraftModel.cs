@@ -6,15 +6,15 @@ namespace MVC.Model
 {
     public class AircraftModel
     {
-        private readonly Dictionary<DetailModel, int> _creationRecipeDictionary;
-        public Dictionary<DetailModel, int> CreationRecipeDictionary => _creationRecipeDictionary;
+        private readonly Dictionary<DetailModel, int> _creationRecipe;
+        public Dictionary<DetailModel, int> CreationRecipe => _creationRecipe;
         public string Id { get; }
         public Sprite Sprite { get; }
         public bool IsAvailable { get; }
 
-        public AircraftModel(Dictionary<DetailModel, int> creationRecipeDictionary, string id, Sprite sprite, bool isAvailable)
+        public AircraftModel(Dictionary<DetailModel, int> creationRecipe, string id, Sprite sprite, bool isAvailable)
         {
-            _creationRecipeDictionary = creationRecipeDictionary;
+            _creationRecipe = creationRecipe;
             Sprite = sprite;
             IsAvailable = isAvailable;
             Id = id;

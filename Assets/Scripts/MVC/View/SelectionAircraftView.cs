@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using Factories;
 using MVC.Model;
-using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -21,9 +19,9 @@ namespace MVC.View
 
         private void Start()
         {
-            foreach (KeyValuePair<AircraftModel, ReactiveProperty<float>> keyValue in _aircraftStorage.AircraftCountDictionary)
+            foreach (AircraftModel aircraftModel in _aircraftStorage.AircraftList)
             {
-                _uiFactory.CreateSelectionAircraftButton(transform, keyValue.Key);
+                _uiFactory.CreateSelectionAircraftButton(transform, aircraftModel);
             }
         }
     }
