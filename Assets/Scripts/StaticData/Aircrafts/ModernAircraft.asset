@@ -15,7 +15,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: cec6c625b2992134486acfd3420b0f21, type: 3}
   aircraftItemsContainer:
     aircraftItem: []
-  id: 40000
+  id: ModernAircraft
   initialPrice: 0
   availableOnStart: 0
-  unlockingPrice: 0
+  unlockingPrice: 40000

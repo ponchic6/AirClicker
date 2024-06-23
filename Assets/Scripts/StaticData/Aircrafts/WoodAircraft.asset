@@ -24,4 +24,4 @@ MonoBehaviour:
   id: WoodAIrcraft
   initialPrice: 2500
   availableOnStart: 0
-  unlockingPrice: 0
+  unlockingPrice: 2500

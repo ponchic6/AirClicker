@@ -18,4 +18,4 @@ MonoBehaviour:
   id: DC-3
   initialPrice: 10000
   availableOnStart: 0
-  unlockingPrice: 0
+  unlockingPrice: 10000
