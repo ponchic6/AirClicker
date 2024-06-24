@@ -40,9 +40,11 @@ namespace Infrastructure
 
         private void Start()
         {
+            Application.targetFrameRate = 60;
+            
             SceneManager.LoadScene("MainScene");
 
-            foreach (AircraftModelSo aircraftModelSo in _aircraftModelsList.AircraftModels)
+            foreach (AircraftModelInitialConfig aircraftModelSo in _aircraftModelsList.AircraftModels)
             {
                 foreach (AircraftItem aircraftSerializableItem in aircraftModelSo.AircraftItemsContainer
                              .AircraftItem)
@@ -54,33 +56,37 @@ namespace Infrastructure
                 }
 
                 AircraftModel aircraftModel = InitializeAircraft(aircraftModelSo);
-
-                _aircraftStorage.AircraftCount[aircraftModel] = new ReactiveProperty<float>();
-                _aircraftStorage.AircraftList.Add(aircraftModel);
-                _aircraftsPriceListModel.AircraftPriceDict[aircraftModel] = new ReactiveProperty<float>();
-                _aircraftsPriceListModel.AircraftPriceDict[aircraftModel].Value = aircraftModelSo.InitialPrice;
-                _aircraftUnblockingPrices.UnblockingPricesDict[aircraftModel] = aircraftModelSo.UnblockingPrice;
+                InitializeAirctaftModels(aircraftModel, aircraftModelSo);
             } 
             
             GameObject mainCanvas = _uiFactory.CreateMainClickerCanvas();
             mainCanvas.GetComponentInChildren<Camera>().gameObject.transform.SetParent(null);
         }
 
-        private AircraftModel InitializeAircraft(AircraftModelSo aircraftModelSo)
+        private void InitializeAirctaftModels(AircraftModel aircraftModel, AircraftModelInitialConfig aircraftModelSo)
+        {
+            _aircraftStorage.AircraftCount[aircraftModel] = new ReactiveProperty<float>();
+            _aircraftStorage.AircraftList.Add(aircraftModel);
+            _aircraftsPriceListModel.AircraftPriceDict[aircraftModel] = new ReactiveProperty<float>();
+            _aircraftsPriceListModel.AircraftPriceDict[aircraftModel].Value = aircraftModelSo.BasePrice;
+            _aircraftUnblockingPrices.UnblockingPricesDict[aircraftModel] = aircraftModelSo.UnblockingPrice;
+        }
+
+        private AircraftModel InitializeAircraft(AircraftModelInitialConfig aircraftModelInitialConfig)
         {
             Dictionary<DetailModel, int> dictionaryReciep = new Dictionary<DetailModel, int>();
 
-            foreach (AircraftItem item in aircraftModelSo.AircraftItemsContainer.AircraftItem)
+            foreach (AircraftItem item in aircraftModelInitialConfig.AircraftItemsContainer.AircraftItem)
             {
                 DetailModel detailModel = _aircraftDetailsStorage.DetailsCount.First(pair =>
                     pair.Key.Id == item.DetailModel.ID).Key;
                 dictionaryReciep[detailModel] = item.Count;
 
-                detailModel.Available = aircraftModelSo.AvailableOnStart;
+                detailModel.Available = aircraftModelInitialConfig.AvailableOnStart;
             }
 
-            AircraftModel aircraftModel = new AircraftModel(dictionaryReciep, aircraftModelSo.Id,
-                aircraftModelSo.Sprite, aircraftModelSo.AvailableOnStart);
+            AircraftModel aircraftModel = new AircraftModel(dictionaryReciep, aircraftModelInitialConfig.Id,
+                aircraftModelInitialConfig.Sprite, aircraftModelInitialConfig.AvailableOnStart);
             return aircraftModel;
         }
 

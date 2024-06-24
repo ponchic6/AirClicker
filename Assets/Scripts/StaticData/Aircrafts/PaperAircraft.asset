@@ -20,6 +20,6 @@ MonoBehaviour:
     - detailModel: {fileID: 11400000, guid: b22c22b3029c5c943a7101c993e8bf90, type: 2}
       count: 10
   id: PaperAircraft
-  initialPrice: 1
+  basePrice: 1
   availableOnStart: 1
   unlockingPrice: 0

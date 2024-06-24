@@ -6,8 +6,8 @@ namespace StaticData
     [CreateAssetMenu(menuName = "StaticData/AircraftModelsList", fileName = "AircraftModelsList")]
     public class AircraftModelsList : ScriptableObject
     {
-        [SerializeField] private List<AircraftModelSo> aircraftModels;
+        [SerializeField] private List<AircraftModelInitialConfig> aircraftModels;
 
-        public List<AircraftModelSo> AircraftModels => aircraftModels;
+        public List<AircraftModelInitialConfig> AircraftModels => aircraftModels;
     }
 }
