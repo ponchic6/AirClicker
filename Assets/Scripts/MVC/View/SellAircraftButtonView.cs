@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MVC.Controller;
+using MVC.Controller.ControllerInterfaces;
 using MVC.Model;
 using TMPro;
 using UniRx;
@@ -17,22 +17,23 @@ namespace MVC.View
         private IAircraftsPriceListModel _aircraftsPriceListModel;
         private IList<IDisposable> _disposables = new List<IDisposable>();
         private IAircraftStoreController _aircraftStoreController;
-        private IAircraftPriceListController _aircraftsPriceListController;
+        private IAircraftPriceController _aircraftPriceController;
 
         [Inject]
         public void Constructor(IAircraftsPriceListModel aircraftsPriceListModel,
-            IAircraftStoreController aircraftStoreController, IAircraftPriceListController aircraftPriceListController)
+            IAircraftStoreController aircraftStoreController, IAircraftPriceController aircraftPriceController)
         {
-            _aircraftsPriceListController = aircraftPriceListController;
+            _aircraftPriceController = aircraftPriceController;
             _aircraftStoreController = aircraftStoreController;
             _aircraftsPriceListModel = aircraftsPriceListModel;
         }
         
         public void BindSellAircraftButton(AircraftModel aircraftModel)
         {   
+            DisposeAll();
             button.onClick.RemoveAllListeners();
 
-            _aircraftsPriceListController.StartDynamicPriceChange(aircraftModel);
+            _aircraftPriceController.StartDynamicPriceChange(aircraftModel);
                 
             _aircraftsPriceListModel
                 .AircraftPriceDict[aircraftModel]
@@ -48,7 +49,7 @@ namespace MVC.View
             });
         }
 
-        private void OnDestroy()
+        private void DisposeAll()
         {
             foreach (IDisposable disposable in _disposables)
             {

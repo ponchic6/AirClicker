@@ -1,6 +1,8 @@
 using Factories;
 using MVC.Controller;
+using MVC.Controller.ControllerInterfaces;
 using MVC.Model;
+using MVC.Model.ModelInterfaces;
 using StaticData;
 using UnityEngine;
 using Zenject;
@@ -45,9 +47,9 @@ namespace Infrastructure
 
         private void RegisterAircraftPriceListController()
         {
-            IAircraftPriceListController aircraftPriceListController =
-                Container.Instantiate<AircraftPriceListController>();
-            Container.Bind<IAircraftPriceListController>().FromInstance(aircraftPriceListController).AsSingle();
+            IAircraftPriceController aircraftPriceController =
+                Container.Instantiate<AircraftPriceController>();
+            Container.Bind<IAircraftPriceController>().FromInstance(aircraftPriceController).AsSingle();
         }
 
         private void RegisterUnblockingPrices()

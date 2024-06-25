@@ -1,7 +1,5 @@
-﻿using System;
-using MVC.Controller;
+﻿using MVC.Controller.ControllerInterfaces;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 

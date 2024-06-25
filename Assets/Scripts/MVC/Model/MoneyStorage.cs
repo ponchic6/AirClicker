@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using MVC.Model.ModelInterfaces;
+using UniRx;
 using UnityEngine;
 
 namespace MVC.Model

@@ -1,7 +1,7 @@
 ﻿using MVC.Model;
 using UnityEngine.UI;
 
-namespace MVC.Controller
+namespace MVC.Controller.ControllerInterfaces
 {
     public interface IAircraftUnblockingController
     {

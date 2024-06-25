@@ -20,6 +20,6 @@ MonoBehaviour:
     - detailModel: {fileID: 11400000, guid: 9779924550355224a8b90571e52c63fc, type: 2}
       count: 40
   id: AirBall
-  basePrice: 5
+  basePrice: 25
   availableOnStart: 0
   unlockingPrice: 100

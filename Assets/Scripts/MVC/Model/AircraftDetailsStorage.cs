@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using Infrastructure;
+using MVC.Model.ModelInterfaces;
 using UniRx;
 
 namespace MVC.Model
 {
     public class AircraftDetailsStorage : IAircraftDetailsStorage
     {
-        private Dictionary<DetailModel, ReactiveProperty<float>> _detailsCountDictionary = new();
-        private Dictionary<AircraftModel, ReactiveProperty<float>> _aircraftCountDictionary { get; } = new();
+        private readonly Dictionary<DetailModel, ReactiveProperty<float>> _detailsCountDictionary = new();
+        private readonly Dictionary<AircraftModel, ReactiveProperty<float>> _aircraftCountDictionary = new();
 
         public Dictionary<DetailModel, ReactiveProperty<float>> DetailsCount => _detailsCountDictionary;
         public Dictionary<AircraftModel, ReactiveProperty<float>> AircraftCountDictionary => _aircraftCountDictionary;

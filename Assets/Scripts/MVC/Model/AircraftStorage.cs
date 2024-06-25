@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Infrastructure;
+using MVC.Model.ModelInterfaces;
 using UniRx;
 
 namespace MVC.Model

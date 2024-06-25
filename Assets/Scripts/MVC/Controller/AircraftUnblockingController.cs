@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using MVC.Controller.ControllerInterfaces;
 using MVC.Model;
+using MVC.Model.ModelInterfaces;
 using UniRx;
 using UnityEngine.UI;
 

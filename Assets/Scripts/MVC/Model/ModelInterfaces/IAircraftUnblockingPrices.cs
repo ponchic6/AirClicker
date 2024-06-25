@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MVC.Model
+namespace MVC.Model.ModelInterfaces
 {
     public interface IAircraftUnblockingPrices
     { 

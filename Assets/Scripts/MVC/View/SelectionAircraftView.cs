@@ -1,5 +1,6 @@
 using Factories;
 using MVC.Model;
+using MVC.Model.ModelInterfaces;
 using UnityEngine;
 using Zenject;
 

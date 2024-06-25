@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using MVC.Controller.ControllerInterfaces;
 using MVC.Model;
+using MVC.Model.ModelInterfaces;
 using UnityEngine;
 
 namespace MVC.Controller
@@ -21,7 +23,7 @@ namespace MVC.Controller
         public void DetailButtonClick(DetailModel detailModel, AircraftModel aircraftModel)
         {
             _aircraftDetailsStorage.DetailsCount[detailModel].Value +=
-                aircraftModel.CreationRecipe[detailModel] * Random.value * 0.5f * (1 + _clickComboController.ComboClickMultiplier);
+                aircraftModel.CreationRecipe[detailModel] * Random.value * 0.1f * (1 + _clickComboController.ComboClickMultiplier);
         }
 
         public void TryCreateAircraft(AircraftModel aircraftModel)

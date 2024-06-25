@@ -14,8 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: cec6c625b2992134486acfd3420b0f21, type: 3}
   aircraftItemsContainer:
-    aircraftItem: []
+    aircraftItem:
+    - detailModel: {fileID: 11400000, guid: f878ead9c7455b74ba19f024651dc64d, type: 2}
+      count: 10000
+    - detailModel: {fileID: 11400000, guid: f0c4732a9ee1b8d4abd730a45b38db63, type: 2}
+      count: 15200
+    - detailModel: {fileID: 11400000, guid: 0637439bb7051f94b9be0e9bdf9e198e, type: 2}
+      count: 6700
+    - detailModel: {fileID: 11400000, guid: e9e910ce2b533134f8a44b07cffac4fb, type: 2}
+      count: 9000
   id: ModernAircraft
-  initialPrice: 0
+  basePrice: 10000
   availableOnStart: 0
-  unlockingPrice: 40000
+  unlockingPrice: 75000

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using MVC.Controller;
+using MVC.Controller.ControllerInterfaces;
 using MVC.Model;
+using MVC.Model.ModelInterfaces;
 using MVC.View;
 using UniRx;
 using UnityEngine;

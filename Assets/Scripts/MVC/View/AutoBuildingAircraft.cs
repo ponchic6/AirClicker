@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MVC.Controller;
+using MVC.Controller.ControllerInterfaces;
 using MVC.Model;
 using UniRx;
 using UnityEngine;
@@ -21,15 +22,20 @@ namespace MVC.View
         
         public void StartAutoBuilding(AircraftModel aircraftModel)
         {
-            foreach (IDisposable disposable in _disposables)
-            {
-                disposable.Dispose();
-            }
-            
+            DisposeAll();
+
             Observable.EveryUpdate().Subscribe(_ =>
             {
                 _detailsIncreaser.TryCreateAircraft(aircraftModel);
             }).AddTo(_disposables);
+        }
+
+        private void DisposeAll()
+        {
+            foreach (IDisposable disposable in _disposables)
+            {
+                disposable.Dispose();
+            }
         }
     }
 }

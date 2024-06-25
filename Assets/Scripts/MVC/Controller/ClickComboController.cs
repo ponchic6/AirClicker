@@ -1,17 +1,16 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using MVC.Controller.ControllerInterfaces;
 using MVC.Model;
 using MVC.View;
 using StaticData;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = System.Random;
 
 namespace MVC.Controller
 {
     public class ClickComboController : IClickComboController
     {
-        private Random _random = new Random();
         private AircraftModel _aircraftModel;
         private GameObject _mainCanvas;
         private DetailModel _detailModel;
@@ -84,7 +83,7 @@ namespace MVC.Controller
             }
             
             int count = _aircraftModel.CreationRecipe.Count;
-            _detailModel = _aircraftModel.CreationRecipe.ElementAt(_random.Next(count)).Key;
+            _detailModel = GetRandomDetail();
 
             Transform transform = _mainCanvas.GetComponentInChildren<GridLayoutGroup>().transform;
 
@@ -96,6 +95,30 @@ namespace MVC.Controller
                     return;
                 }
             }
+        }
+
+        private DetailModel GetRandomDetail()
+        {
+            float commonWeight = 0;
+
+            foreach (KeyValuePair<DetailModel, int> detailInt in _aircraftModel.CreationRecipe)
+            {
+                commonWeight += 1f / detailInt.Value;
+            }
+            
+            commonWeight *= Random.value;
+
+            foreach (KeyValuePair<DetailModel, int> detailInt in _aircraftModel.CreationRecipe)
+            {
+                if (commonWeight < 1f / detailInt.Value)
+                {
+                    return detailInt.Key;
+                }
+                
+                commonWeight -= 1f / detailInt.Value;
+            }
+
+            return null;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Factories;
 using MVC.Model;
+using MVC.Model.ModelInterfaces;
 using UniRx;
 using UnityEngine;
 using Zenject;

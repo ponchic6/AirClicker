@@ -2,9 +2,8 @@
 using MVC.View;
 using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace MVC.Controller
+namespace MVC.Controller.ControllerInterfaces
 {
     public interface IClickComboController
     {

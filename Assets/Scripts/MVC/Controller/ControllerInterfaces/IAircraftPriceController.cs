@@ -1,8 +1,8 @@
 ﻿using MVC.Model;
 
-namespace MVC.Controller
+namespace MVC.Controller.ControllerInterfaces
 {
-    public interface IAircraftPriceListController
+    public interface IAircraftPriceController
     {
         public void StartDynamicPriceChange(AircraftModel aircraftModel);
     }

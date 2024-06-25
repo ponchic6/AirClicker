@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UniRx;
 
-namespace MVC.Model
+namespace MVC.Model.ModelInterfaces
 {
     public interface IAircraftDetailsStorage
     {

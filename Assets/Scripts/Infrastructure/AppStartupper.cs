@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Factories;
 using MVC.Model;
+using MVC.Model.ModelInterfaces;
 using StaticData;
 using UniRx;
 using UnityEngine;

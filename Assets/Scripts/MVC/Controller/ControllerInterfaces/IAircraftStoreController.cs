@@ -1,6 +1,6 @@
 using MVC.Model;
 
-namespace MVC.Controller
+namespace MVC.Controller.ControllerInterfaces
 {
     public interface IAircraftStoreController
     {

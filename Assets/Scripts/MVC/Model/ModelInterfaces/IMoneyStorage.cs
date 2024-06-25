@@ -1,6 +1,6 @@
 ﻿using UniRx;
 
-namespace MVC.Model
+namespace MVC.Model.ModelInterfaces
 {
     public interface IMoneyStorage
     {

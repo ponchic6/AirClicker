@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MVC.Controller.ControllerInterfaces;
 using MVC.Model;
 using UniRx;
 using UnityEngine;
@@ -7,14 +8,14 @@ using Random = UnityEngine.Random;
 
 namespace MVC.Controller
 {
-    public class AircraftPriceListController : IAircraftPriceListController
+    public class AircraftPriceController : IAircraftPriceController
     {
         private List<IDisposable> _disposables = new List<IDisposable>();
         private IAircraftsPriceListModel _aircraftsPriceListModel;
         private float _cachedBasePrice;
         private AircraftModel _cashedAirModel;
 
-        public AircraftPriceListController(IAircraftsPriceListModel aircraftsPriceListModel)
+        public AircraftPriceController(IAircraftsPriceListModel aircraftsPriceListModel)
         {
             _aircraftsPriceListModel = aircraftsPriceListModel;
         }
@@ -32,7 +33,7 @@ namespace MVC.Controller
 
             Observable.Timer(TimeSpan.FromSeconds(0.6f)).Repeat().Subscribe(_ =>
             {
-                float price = 0.7f * _cachedBasePrice +
+                float price = _cachedBasePrice +
                               Mathf.Sin(Time.time * 0.1f * Mathf.PI) * _cachedBasePrice + Random.value * _cachedBasePrice; 
                 _aircraftsPriceListModel.SetPrice(aircraftModel, price);
             }).AddTo(_disposables);

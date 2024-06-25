@@ -1,6 +1,7 @@
 ﻿using Factories;
-using MVC.Controller;
+using MVC.Controller.ControllerInterfaces;
 using MVC.Model;
+using MVC.Model.ModelInterfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

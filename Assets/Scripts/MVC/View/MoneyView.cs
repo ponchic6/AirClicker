@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MVC.Model;
+using MVC.Model.ModelInterfaces;
 using TMPro;
 using UniRx;
 using UnityEngine;
