@@ -81,8 +81,7 @@ namespace MVC.Controller
                     }
                 }
             }
-            
-            int count = _aircraftModel.CreationRecipe.Count;
+
             _detailModel = GetRandomDetail();
 
             Transform transform = _mainCanvas.GetComponentInChildren<GridLayoutGroup>().transform;

@@ -80,7 +80,7 @@ namespace Infrastructure
             foreach (AircraftItem item in aircraftModelInitialConfig.AircraftItemsContainer.AircraftItem)
             {
                 DetailModel detailModel = _aircraftDetailsStorage.DetailsCount.First(pair =>
-                    pair.Key.Id == item.DetailModel.ID).Key;
+                    pair.Key.Id == item.DetailModel.id).Key;
                 dictionaryReciep[detailModel] = item.Count;
 
                 detailModel.Available = aircraftModelInitialConfig.AvailableOnStart;
@@ -93,21 +93,21 @@ namespace Infrastructure
 
         private void InitializeDetailModel(AircraftItem aircraftItem)
         {
-            DetailModel detailModel = new DetailModel(aircraftItem.DetailModel.ID,
-                aircraftItem.DetailModel.Sprite, aircraftItem.DetailModel.UpgradeValue);
+            DetailModel detailModel = new DetailModel(aircraftItem.DetailModel.id,
+                aircraftItem.DetailModel.sprite, aircraftItem.DetailModel.upgradeValue);
 
             _aircraftDetailsStorage.DetailsCount[detailModel] = new ReactiveProperty<float>();
 
             _upgradePriceModel.PricesUpgradeModelDictionary[detailModel] = new ReactiveProperty<float>();
             _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Value 
-                = aircraftItem.DetailModel.InitialUpgradePrice;
+                = aircraftItem.DetailModel.initialUpgradePrice;
                         
             _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel] = new ReactiveProperty<float>();
         }
 
         private bool HasDictionaryDetailWithId(AircraftItem aircraftItem)
         {
-            return _aircraftDetailsStorage.DetailsCount.Keys.Any(detail => detail.Id == aircraftItem.DetailModel.ID);
+            return _aircraftDetailsStorage.DetailsCount.Keys.Any(detail => detail.Id == aircraftItem.DetailModel.id);
         }
     }
 }

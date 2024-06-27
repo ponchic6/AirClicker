@@ -49,7 +49,7 @@ namespace MVC.View
             
             _upgradePriceModel.PricesUpgradeModelDictionary[detailModel].Subscribe(value =>
             {
-                upgradeButton.gameObject.GetComponentInChildren<TMP_Text>().text = value + " $";
+                upgradeButton.gameObject.GetComponentInChildren<TMP_Text>().text = decimal.Round((decimal)value, 2) + " $";
             }).AddTo(_disposables);
 
             upgradeButton.onClick.AddListener(() =>

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Serialization;
 using Utilites;
 
@@ -20,5 +21,22 @@ namespace StaticData
         public float BasePrice => basePrice;
         public bool AvailableOnStart => availableOnStart;
         public float UnblockingPrice => unlockingPrice;
+
+        private void OnValidate()
+        {
+            float totalDetailCount = 0;
+            
+            foreach (AircraftItem aircraftItem in aircraftItemsContainer.AircraftItem)
+            {
+                //aircraftItem.DetailModel.initialUpgradePrice = basePrice;
+                totalDetailCount += aircraftItem.Count;
+                aircraftItem.DetailModel.upgradeValue = (float)aircraftItem.Count / 10;
+            }
+            
+            foreach (AircraftItem aircraftItem in aircraftItemsContainer.AircraftItem)
+            {
+                aircraftItem.DetailModel.initialUpgradePrice = (totalDetailCount / aircraftItem.Count ) * basePrice;
+            }
+        }
     } 
 }
