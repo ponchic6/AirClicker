@@ -1,4 +1,5 @@
-﻿using MVC.Model;
+﻿using Aircraft;
+using Detail;
 using UniRx;
 using UnityEngine;
 

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using MVC.Controller;
-using MVC.Controller.ControllerInterfaces;
-using MVC.Model;
-using MVC.Model.ModelInterfaces;
+using Aircraft;
+using Combo;
+using Detail;
 using MVC.View;
+using Storages;
+using UIViews;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,19 +22,19 @@ namespace Factories
 
         private readonly DiContainer _diContainer;
         private readonly IDetailsIncreaser _detailsIncreaser;
-        private readonly IAircraftDetailsStorage _aircraftDetailsStorage;
-        private readonly IDetailPerSecondModel _detailPerSecondModel;
+        private readonly IDetailsStorage _detailsStorage;
+        private readonly IDetailPerSecondInfo _detailPerSecondInfo;
         private readonly IClickComboController _clickComboController;
         
         private GameObject _mainCanvas;
 
         public UIFactory(DiContainer diContainer, IDetailsIncreaser detailsIncreaser,
-            IAircraftDetailsStorage aircraftDetailsStorage, IDetailPerSecondModel detailPerSecondModel, 
+            IDetailsStorage detailsStorage, IDetailPerSecondInfo detailPerSecondInfo, 
             IClickComboController clickComboController)
         {
             _clickComboController = clickComboController;
-            _aircraftDetailsStorage = aircraftDetailsStorage;
-            _detailPerSecondModel = detailPerSecondModel;
+            _detailsStorage = detailsStorage;
+            _detailPerSecondInfo = detailPerSecondInfo;
             _detailsIncreaser = detailsIncreaser;
             _diContainer = diContainer;
         }
@@ -66,8 +67,8 @@ namespace Factories
             GameObject upgradeButton = _diContainer.InstantiatePrefabResource(DetailUpgradeButtonPath, parent);
             DetailUpgradeButtonView upgradeButtonView = upgradeButton.GetComponent<DetailUpgradeButtonView>();
             upgradeButtonView.Initialize(detailModel, detailModel.Sprite,
-                _detailPerSecondModel.DetailsPerSecondsDictionary[detailModel],
-                _aircraftDetailsStorage.DetailsCount[detailModel]);
+                _detailPerSecondInfo.DetailsPerSeconds[detailModel],
+                _detailsStorage.DetailsCount[detailModel]);
         }
 
         private void InirializeNewDetailButtons(AircraftModel aircraftModel, GameObject parent)
@@ -77,8 +78,8 @@ namespace Factories
                 GameObject detailButton =
                     _diContainer.InstantiatePrefabResource(DetailButtonPath, parent.transform);
 
-                detailButton.GetComponent<DetailButtonView>().Initialize(_aircraftDetailsStorage, _detailsIncreaser,
-                    keyValue.Key, aircraftModel, _detailPerSecondModel);
+                detailButton.GetComponent<DetailButtonView>().Initialize(_detailsStorage, _detailsIncreaser,
+                    keyValue.Key, aircraftModel, _detailPerSecondInfo);
             }
         }
 

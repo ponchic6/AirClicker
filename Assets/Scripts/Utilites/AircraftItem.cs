@@ -1,5 +1,4 @@
 ﻿using System;
-using MVC.Model;
 using StaticData;
 using UnityEngine;
 

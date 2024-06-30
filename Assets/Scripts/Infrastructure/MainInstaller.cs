@@ -1,9 +1,10 @@
+using Combo;
+using Detail;
 using Factories;
-using MVC.Controller;
-using MVC.Controller.ControllerInterfaces;
-using MVC.Model;
-using MVC.Model.ModelInterfaces;
+using Markets;
+using Markets.MarketInterfaces;
 using StaticData;
+using Storages;
 using UnityEngine;
 using Zenject;
 
@@ -72,8 +73,8 @@ namespace Infrastructure
 
         private void RegisterAircraftsPriceList()
         {
-            IAircraftsPriceListModel aircraftsPriceListModel = Container.Instantiate<AircraftsPriceListModel>();
-            Container.Bind<IAircraftsPriceListModel>().FromInstance(aircraftsPriceListModel).AsSingle();
+            IAircraftsPriceList aircraftsPriceList = Container.Instantiate<AircraftsPriceList>();
+            Container.Bind<IAircraftsPriceList>().FromInstance(aircraftsPriceList).AsSingle();
         }
 
         private void RegisterMoneyStorage()
@@ -90,14 +91,14 @@ namespace Infrastructure
 
         private void RegisterUpgradePriceModel()
         {
-            IUpgradePriceModel upgradePriceModel = Container.Instantiate<UpgradePriceModel>();
-            Container.Bind<IUpgradePriceModel>().FromInstance(upgradePriceModel).AsSingle();
+            IUpgradePriceList upgradePriceList = Container.Instantiate<UpgradePriceList>();
+            Container.Bind<IUpgradePriceList>().FromInstance(upgradePriceList).AsSingle();
         }
 
         private void RegisterDetailPerSecond()
         {
-            IDetailPerSecondModel detailPerSecondModel = Container.Instantiate<DetailPerSecondModel>();
-            Container.Bind<IDetailPerSecondModel>().FromInstance(detailPerSecondModel).AsSingle();
+            IDetailPerSecondInfo detailPerSecondInfo = Container.Instantiate<DetailPerSecondInfo>();
+            Container.Bind<IDetailPerSecondInfo>().FromInstance(detailPerSecondInfo).AsSingle();
         }
 
         private void RegisterAircraftStaticData()
@@ -107,8 +108,8 @@ namespace Infrastructure
 
         private void RegisterAircraftDetailsStorage()
         {
-            IAircraftDetailsStorage aircraftDetailsStorage = Container.Instantiate<AircraftDetailsStorage>();
-            Container.Bind<IAircraftDetailsStorage>().FromInstance(aircraftDetailsStorage).AsSingle();
+            IDetailsStorage detailsStorage = Container.Instantiate<DetailsStorage>();
+            Container.Bind<IDetailsStorage>().FromInstance(detailsStorage).AsSingle();
         }
 
         private void RegisterDetailsIncreaser()
